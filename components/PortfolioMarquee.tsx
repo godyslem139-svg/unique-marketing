@@ -23,7 +23,7 @@ export default function PortfolioMarquee() {
   const projects = [
     { name: "Ahmed Abdul Rahman", image: "/ahmed-abdul-rahman.webp", url: "https://ahmed-abdul-rahman.vercel.app/" },
     { name: "Almustaemal", image: "/almustaemal.webp", url: "https://almustaemal.com/" },
-    { name: "Elbadrelakarya", image: "/elbadrelakarya.webp", url: "https://elbadrelakarya.org/" },
+    { name: "Elbadrelakarya", image: "/elbadrelakarya.org.webp", url: "https://elbadrelakarya.org/" },
     { name: "Fastmove", image: "/fastmovekw.webp", url: "https://fastmovekw.com/" },
     { name: "Gold Shield", image: "/goldshield.webp", url: "https://goldshield-sa.com/" },
     { name: "Haflorry", image: "/haflorry.webp", url: "https://haflorry.com/" },
@@ -41,8 +41,8 @@ export default function PortfolioMarquee() {
     <section className="relative w-full py-20 bg-[#000000] overflow-hidden">
       
       <div className="max-w-5xl mx-auto px-4 text-center mb-16">
-        <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-black/80 border border-[#F5BD02]/60 text-[#F5BD02] text-sm font-bold mb-6 shadow-[0_0_20px_rgba(245,189,2,0.3)]">
-          <span className="w-2.5 h-2.5 rounded-full bg-[#F5BD02] animate-pulse"></span>
+        <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-black/80 border border-blue-500/50 text-blue-400 text-sm font-bold mb-6 shadow-[0_0_20px_rgba(30,58,138,0.4)]">
+          <span className="w-2.5 h-2.5 rounded-full bg-blue-500 animate-pulse"></span>
           {t.PortfolioSection.subtitle}
         </div>
 
@@ -54,9 +54,9 @@ export default function PortfolioMarquee() {
           {t.PortfolioSection.description}
         </p>
 
-        <div className="w-32 h-1 bg-[#F5BD02] mx-auto rounded-full shadow-[0_0_15px_#F5BD02] mb-6"></div>
+        <div className="w-32 h-1 bg-blue-600 mx-auto rounded-full shadow-[0_0_15px_rgba(37,99,235,0.8)] mb-6"></div>
 
-        <h3 className="text-xl md:text-2xl font-bold text-[#F5BD02]">
+        <h3 className="text-xl md:text-2xl font-bold text-blue-400">
           {t.PortfolioSection.sectionTitle}
         </h3>
       </div>
@@ -65,7 +65,6 @@ export default function PortfolioMarquee() {
         <div className="absolute top-0 bottom-0 left-0 w-24 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none"></div>
         <div className="absolute top-0 bottom-0 right-0 w-24 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none"></div>
 
-        {/* 3 kārts lā repeat karun seamless loop banāvalā āhe */}
         <div className={`flex w-max gap-8 hover:[animation-play-state:paused] ${locale === 'ar' ? 'animate-marquee-rtl' : 'animate-marquee'}`}>
           {[...projects, ...projects, ...projects].map((project, index) => (
             <a
@@ -74,7 +73,7 @@ export default function PortfolioMarquee() {
               target="_blank"
               rel="noopener noreferrer"
               title={`زيارة موقع ${project.name}`}
-              className="relative w-80 h-52 rounded-2xl bg-[#0a0a0a] border border-[#F5BD02]/50 shadow-[0_0_25px_rgba(245,189,2,0.2)] hover:shadow-[0_0_40px_rgba(245,189,2,0.6)] hover:border-[#F5BD02] transition-all duration-300 overflow-hidden group flex flex-col items-center justify-between p-4 flex-shrink-0"
+              className="relative w-80 h-52 rounded-2xl bg-[#0a0a0a] border border-blue-500/30 shadow-[0_0_25px_rgba(30,58,138,0.2)] hover:shadow-[0_0_40px_rgba(59,130,246,0.6)] hover:border-blue-500 transition-all duration-300 overflow-hidden group flex flex-col items-center justify-between p-4 flex-shrink-0"
             >
               <div className="relative w-full h-36 rounded-xl overflow-hidden bg-black/50">
                 <Image
@@ -88,7 +87,7 @@ export default function PortfolioMarquee() {
 
               <div className="w-full flex items-center justify-between mt-3 px-1">
                 <span className="text-white font-bold text-sm truncate">{project.name}</span>
-                <span className="text-xs text-[#F5BD02] font-semibold underline group-hover:text-yellow-300 transition">
+                <span className="text-xs text-blue-400 font-semibold underline group-hover:text-blue-300 transition">
                   {t.PortfolioSection.visitProject} &rarr;
                 </span>
               </div>

@@ -57,8 +57,8 @@ export default function LiveDashboardSection() {
   return (
     <section key={locale} className="relative w-full bg-[#000000] py-24 px-4 md:px-8 overflow-hidden font-sans">
       
-      {/* توهج خلفي خفيف */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[60vw] max-w-[800px] max-h-[800px] bg-[#F5BD02]/5 blur-[120px] rounded-full pointer-events-none"></div>
+      {/* توهج كحلي خلفي خفيف */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[60vw] max-w-[800px] max-h-[800px] bg-blue-600/10 blur-[120px] rounded-full pointer-events-none"></div>
 
       <div className="relative z-10 max-w-7xl mx-auto">
         
@@ -66,7 +66,7 @@ export default function LiveDashboardSection() {
         <div className={`mb-16 max-w-4xl ${locale === 'ar' ? 'text-right' : 'text-left'}`}>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-normal text-white mb-8 tracking-tight">
             {data.title1}
-            <span className="font-bold text-[#F5BD02] drop-shadow-[0_0_20px_rgba(245,189,2,0.3)]">{data.titleHighlight}</span>
+            <span className="font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-300 via-blue-500 to-indigo-600 drop-shadow-[0_0_20px_rgba(30,58,138,0.5)]"> {data.titleHighlight} </span>
             {data.title2}
           </h2>
           <div className="space-y-4">
@@ -89,18 +89,18 @@ export default function LiveDashboardSection() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 h-[600px]">
           
           {/* الكونتينر الأيسر: WordPress & SEO Tools Logs */}
-          <div className="relative w-full h-full rounded-[2rem] bg-[#050505] border border-white/5 shadow-[0_0_40px_rgba(0,0,0,0.8)] overflow-hidden flex flex-col group">
+          <div className="relative w-full h-full rounded-[2rem] bg-[#050505] border border-blue-500/20 shadow-[0_0_40px_rgba(30,58,138,0.2)] overflow-hidden flex flex-col group">
             
-            <div className="absolute top-8 left-1/2 -translate-x-1/2 z-20 w-[90%] max-w-[400px] rounded-2xl bg-[#111] border border-white/10 p-2 flex items-center justify-between shadow-2xl backdrop-blur-md">
+            <div className="absolute top-8 left-1/2 -translate-x-1/2 z-20 w-[90%] max-w-[400px] rounded-2xl bg-[#111] border border-blue-500/30 p-2 flex items-center justify-between shadow-2xl backdrop-blur-md">
               <div className="flex items-center gap-3 px-2">
-                <span className="px-3 py-1 rounded-full text-xs font-bold text-[#F5BD02] bg-[#F5BD02]/10 border border-[#F5BD02]/20 flex items-center gap-1.5">
-                  <span className="w-2 h-2 rounded-full bg-[#F5BD02] animate-pulse"></span>
+                <span className="px-3 py-1 rounded-full text-xs font-bold text-blue-400 bg-blue-600/20 border border-blue-500/30 flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
                   Live
                 </span>
                 <span className="text-sm text-gray-200">wp-admin / SEO Tools <span className="text-gray-500 text-xs">▼</span></span>
               </div>
-              <button className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 text-white text-xs font-medium transition">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+              <button className="flex items-center gap-2 px-4 py-2 rounded-xl bg-blue-600/20 hover:bg-blue-600/30 border border-blue-500/30 text-white text-xs font-medium transition">
+                <svg className="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
                 Sync
               </button>
             </div>
@@ -131,16 +131,16 @@ export default function LiveDashboardSection() {
           </div>
 
           {/* الكونتينر الأيمن: Next.js File Structure */}
-          <div className="relative w-full h-full rounded-[2rem] bg-[#050505] border border-white/5 shadow-[0_0_40px_rgba(0,0,0,0.8)] overflow-hidden mask-image-y">
+          <div className="relative w-full h-full rounded-[2rem] bg-[#050505] border border-blue-500/20 shadow-[0_0_40px_rgba(30,58,138,0.2)] overflow-hidden mask-image-y">
             
-            <div className={`absolute top-0 bottom-0 w-px bg-white/10 ${locale === 'ar' ? 'right-12' : 'left-12'}`}></div>
+            <div className={`absolute top-0 bottom-0 w-px bg-blue-500/20 ${locale === 'ar' ? 'right-12' : 'left-12'}`}></div>
 
             <div className="absolute top-0 left-0 w-full animate-slide-down-slow">
               <div className="flex flex-col gap-10 py-10 px-6">
                 {infiniteFiles.map((file, index) => (
                   <div key={index} className={`relative flex items-start gap-6 ${locale === 'ar' ? 'flex-row-reverse' : ''}`}>
                     
-                    <div className={`relative z-10 w-12 h-12 rounded-xl bg-[#111] border border-white/10 flex items-center justify-center text-lg shadow-xl ${file.color.split(' ')[0]}`}>
+                    <div className={`relative z-10 w-12 h-12 rounded-xl bg-[#111] border border-blue-500/30 flex items-center justify-center text-lg shadow-xl ${file.color.split(' ')[0]}`}>
                       {file.icon}
                     </div>
 

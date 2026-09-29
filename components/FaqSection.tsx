@@ -7,7 +7,7 @@ import en from "@/messages/en.json";
 export default function FaqSection() {
   const [locale, setLocale] = useState<"ar" | "en">("ar");
   const [searchQuery, setSearchQuery] = useState("");
-  const [openIndex, setOpenIndex] = useState<number | null>(0); //فتح أول سؤال افتراضياً
+  const [openIndex, setOpenIndex] = useState<number | null>(0); // فتح أول سؤال افتراضياً
 
   useEffect(() => {
     const checkLang = () => {
@@ -58,21 +58,21 @@ export default function FaqSection() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
 
-      {/* توهج خلفي */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-[#F5BD02]/5 blur-[160px] rounded-full pointer-events-none"></div>
+      {/* توهج كحلي خلفي */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-blue-600/10 blur-[160px] rounded-full pointer-events-none"></div>
 
       <div className="relative z-10 max-w-5xl mx-auto">
         
         {/* مقدمة القسم */}
         <div className="max-w-4xl mx-auto text-center mb-14">
-          <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-[#111] border border-[#F5BD02]/40 text-[#F5BD02] text-sm font-bold mb-6 shadow-[0_0_15px_rgba(245,189,2,0.2)]">
-            <span className="w-2 h-2 rounded-full bg-[#F5BD02] animate-pulse"></span>
+          <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-[#111] border border-blue-500/40 text-blue-400 text-sm font-bold mb-6 shadow-[0_0_15px_rgba(30,58,138,0.3)]">
+            <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
             {data.badge}
           </div>
           
           <h2 className="text-3xl md:text-5xl lg:text-6xl font-black text-white mb-6 leading-tight">
             {data.title1}
-            <span className="text-[#F5BD02] drop-shadow-[0_0_15px_rgba(245,189,2,0.4)]">{data.titleHighlight}</span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-300 via-blue-500 to-indigo-600 drop-shadow-[0_0_15px_rgba(30,58,138,0.5)]"> {data.titleHighlight} </span>
             {data.title2}
           </h2>
           
@@ -90,7 +90,7 @@ export default function FaqSection() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder={data.searchPlaceholder}
-              className="w-full py-4 ps-14 pe-6 rounded-2xl bg-[#0a0a0a] border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-[#F5BD02] transition-all shadow-[0_0_20px_rgba(0,0,0,0.8)] text-sm md:text-base"
+              className="w-full py-4 ps-14 pe-6 rounded-2xl bg-[#0a0a0a] border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 transition-all shadow-[0_0_20px_rgba(0,0,0,0.8)] text-sm md:text-base"
             />
           </div>
         </div>
@@ -103,16 +103,16 @@ export default function FaqSection() {
               return (
                 <div 
                   key={index}
-                  className={`rounded-2xl bg-[#050505] border transition-all duration-300 overflow-hidden ${isOpen ? 'border-[#F5BD02]/60 shadow-[0_0_30px_rgba(245,189,2,0.1)]' : 'border-white/5 hover:border-white/20'}`}
+                  className={`rounded-2xl bg-[#050505] border transition-all duration-300 overflow-hidden ${isOpen ? 'border-blue-500/60 shadow-[0_0_30px_rgba(30,58,138,0.2)]' : 'border-white/5 hover:border-white/20'}`}
                 >
                   <button
                     onClick={() => setOpenIndex(isOpen ? null : index)}
                     className="w-full p-6 md:p-8 flex items-center justify-between text-right gap-6 transition"
                   >
-                    <span className="text-lg md:text-xl font-bold text-white group-hover:text-[#F5BD02] transition-colors">
+                    <span className="text-lg md:text-xl font-bold text-white group-hover:text-blue-400 transition-colors">
                       {faq.q}
                     </span>
-                    <div className={`w-10 h-10 rounded-xl bg-[#111] border border-white/10 flex items-center justify-center text-[#F5BD02] shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-180 bg-[#F5BD02]/10 border-[#F5BD02]/40' : ''}`}>
+                    <div className={`w-10 h-10 rounded-xl bg-[#111] border border-white/10 flex items-center justify-center text-blue-400 shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-180 bg-blue-600/20 border-blue-500/40' : ''}`}>
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 9l-7 7-7-7"></path></svg>
                     </div>
                   </button>
@@ -134,9 +134,9 @@ export default function FaqSection() {
 
         {/* قسم Call to Action الختامي */}
         <div className="relative max-w-4xl mx-auto group">
-          <div className="absolute -inset-1 bg-gradient-to-r from-[#F5BD02]/40 via-[#ffe885] to-[#F5BD02]/40 rounded-[2.5rem] blur opacity-30 group-hover:opacity-60 transition duration-1000"></div>
+          <div className="absolute -inset-1 bg-gradient-to-r from-blue-600/30 via-blue-500/50 to-indigo-600/30 rounded-[2.5rem] blur opacity-30 group-hover:opacity-60 transition duration-1000"></div>
 
-          <div className="relative px-8 py-14 md:px-16 md:py-16 rounded-[2.3rem] bg-[#050505] border border-[#F5BD02]/30 flex flex-col md:flex-row items-center justify-between gap-8 overflow-hidden shadow-[0_0_50px_rgba(245,189,2,0.15)]">
+          <div className="relative px-8 py-14 md:px-16 md:py-16 rounded-[2.3rem] bg-[#050505] border border-blue-500/40 flex flex-col md:flex-row items-center justify-between gap-8 overflow-hidden shadow-[0_0_50px_rgba(30,58,138,0.4)]">
             
             <div className={`relative z-10 flex-1 ${locale === 'ar' ? 'text-right' : 'text-left'}`}>
               <h3 className="text-2xl md:text-3xl font-black text-white mb-3">
@@ -150,7 +150,7 @@ export default function FaqSection() {
             <div className="relative z-10 shrink-0 w-full md:w-auto">
               <Link 
                 href="/contact"
-                className="relative inline-flex items-center justify-center w-full md:w-auto px-8 py-5 text-base font-black text-black bg-[#F5BD02] rounded-2xl overflow-hidden shadow-[0_0_25px_rgba(245,189,2,0.4)] hover:shadow-[0_0_50px_rgba(245,189,2,0.8)] hover:scale-105 transition-all duration-300 group/btn"
+                className="relative inline-flex items-center justify-center w-full md:w-auto px-8 py-5 text-base font-black text-white bg-blue-600 rounded-2xl overflow-hidden shadow-[0_0_25px_rgba(30,58,138,0.6)] hover:shadow-[0_0_50px_rgba(59,130,246,0.9)] hover:scale-105 transition-all duration-300 group/btn border border-blue-500"
               >
                 <span className="absolute w-0 h-0 transition-all duration-500 ease-out bg-white rounded-full group-hover/btn:w-64 group-hover/btn:h-64 opacity-20"></span>
                 <span className="relative flex items-center gap-3">

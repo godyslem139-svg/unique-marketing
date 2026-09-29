@@ -598,9 +598,10 @@
   },
   "Footer": {
     "agencyName": "UNIQUE",
+    "agencySub": "Digital Marketing & SEO Agency",
     "agencyDesc": "An integrated digital agency for SEO, web design, and digital marketing, helping you achieve a sustainable digital presence and top search rankings.",
-    "email": "contact@unique-agency.dev",
-    "phone": "+20 120 000 0000",
+    "email": "godyslem139@gmail.com",
+    "phone": "+20 127 050 6511",
     "quickLinksTitle": "Quick Links",
     "servicesTitle": "Our Services",
     "aboutUs": "About Us",
@@ -608,9 +609,9 @@
     "portfolio": "Portfolio",
     "contactUs": "Contact Us",
     "seoService": "Search Engine Optimization (SEO)",
+    "backlinks": "Backlinks Building",
     "webDesign": "Web Design & Development",
-    "socialMedia": "Social Media Management",
-    "marketing": "Advertising Campaigns",
+    "ecommerce": "E-commerce Stores",
     "rights": "All rights reserved © 2026 UNIQUE Digital Agency."
   }
 

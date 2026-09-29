@@ -598,19 +598,20 @@
   },
   "Footer": {
     "agencyName": "UNIQUE",
+    "agencySub": "Digital Marketing & SEO Agency",
     "agencyDesc": "وكالة رقمية متكاملة لخدمات السيو، وتصميم المواقع، والتسويق الإلكتروني، نساعدك على تحقيق حضور رقمي مستدام وتصدر نتائج البحث.",
-    "email": "contact@unique-agency.dev",
-    "phone": "+20 120 000 0000",
+    "email": "godyslem139@gmail.com",
+    "phone": "+20 127 050 6511",
     "quickLinksTitle": "الروابط السريعة",
     "servicesTitle": "خدماتنا الاحترافية",
     "aboutUs": "من نحن",
     "services": "خدماتنا",
     "portfolio": "أعمالنا",
     "contactUs": "اتصل بنا",
-    "seoService": "تحسين محركات البحث SEO",
-    "webDesign": "تصميم وتطوير المواقع",
-    "socialMedia": "إدارة السوشيال ميديا",
-    "marketing": "الحملات الإعلانية",
+    "seoService": "تحسين محركات البحث (SEO)",
+    "backlinks": "بناء الروابط الخلفية (Backlinks)",
+    "webDesign": "تصميم وتطوير المواقع (WordPress & Next.js)",
+    "ecommerce": "إنشاء المتاجر الإلكترونية",
     "rights": "جميع الحقوق محفوظة © 2026 UNIQUE Digital Agency."
   }
 
