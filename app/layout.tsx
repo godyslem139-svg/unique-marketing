@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import { Cairo } from "next/font/google";
 import "./globals.css";
-import Snow from "@/components/Snow";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import LayoutWrapper from "@/components/LayoutWrapper";
 
 const cairo = Cairo({
   subsets: ["arabic"],
@@ -57,12 +55,9 @@ export default function RootLayout({
       data-scroll-behavior="smooth"
     >
       <body className={`bg-[#000000] text-white selection:bg-yellow-400 selection:text-[#000000] ${cairo.className} antialiased overflow-x-hidden`}>
-        <Snow /> 
-        <Navbar />
-        <main className="w-full">
+        <LayoutWrapper>
           {children}
-        </main>
-        <Footer />
+        </LayoutWrapper>
       </body>
     </html>
   );
