@@ -3,6 +3,7 @@ import AboutSeoSection from "@/components/AboutSeoSection";
 import PortfolioMarquee from "@/components/PortfolioMarquee";
 import SeoStrategiesSection from "@/components/SeoStrategiesSection";
 import WhySeoSection from "@/components/WhySeoSection";
+import HomePricing from "@/components/HomePricing"; // <-- استيراد سكشن الباقات
 import LiveDashboardSection from "@/components/LiveDashboardSection";
 import HowToChooseSeoSection from "@/components/owToChooseSeoSection";
 import HowWeOptimizeSection from "@/components/HowWeOptimizeSection";
@@ -15,18 +16,16 @@ import SeoServicesTableSection from "@/components/SeoServicesTableSection";
 import FaqSection from "@/components/FaqSection";
 import GeoKeywordsSection from "@/components/GeoKeywordsSection";
 
-
-
-
 export default function Home() {
   return (
     <main>
-      <HeroSection />
-      <AboutSeoSection />
-      <PortfolioMarquee />
-      <SeoStrategiesSection />
-      <WhySeoSection />
-      <LiveDashboardSection />
+      <HeroSection />          {/* 1 */}
+      <AboutSeoSection />      {/* 2 */}
+      <PortfolioMarquee />     {/* 3 */}
+      <SeoStrategiesSection /> {/* 4 */}
+      <WhySeoSection />        {/* 5 */}
+      <HomePricing />          {/* 6 - سكشن الباقات الجديد */}
+      <LiveDashboardSection /> {/* 7 */}
       <HowToChooseSeoSection />
       <HowWeOptimizeSection />
       <SeoBenefitsSection />

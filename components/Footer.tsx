@@ -31,15 +31,12 @@ export default function Footer() {
   return (
     <footer key={locale} className="relative w-full bg-[#000000] pt-20 pb-10 px-4 md:px-8 border-t border-blue-600/30 font-sans overflow-hidden">
       
-      {/* توهج كحلي خلفي خفيف */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-blue-600/10 blur-[120px] rounded-full pointer-events-none"></div>
 
       <div className="relative z-10 max-w-7xl mx-auto">
         
-        {/* الجزء العلوي: اللوجو، الوصف، معلومات الاتصال، وأيقونات السوشيال */}
         <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8 pb-16 border-b border-white/10">
           
-          {/* اللوجو والاسم والوصف */}
           <div className="flex items-center gap-5 max-w-lg">
             <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-full overflow-hidden bg-[#000000] flex items-center justify-center shadow-[0_0_25px_rgba(30,58,138,0.7)] shrink-0 border border-blue-500/40">
               <Image
@@ -60,10 +57,8 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* أزرار الاتصال والسوشيال ميديا */}
           <div className="flex flex-wrap items-center gap-4">
             
-            {/* البريد الإلكتروني */}
             <a 
               href={`mailto:${data.email}`}
               className="flex items-center gap-2.5 px-4 py-3 rounded-2xl bg-[#050505] border border-white/10 hover:border-blue-500 text-gray-300 hover:text-white text-xs sm:text-sm transition-all shadow-lg"
@@ -72,7 +67,6 @@ export default function Footer() {
               <span>{data.email}</span>
             </a>
 
-            {/* رقم الهاتف */}
             <a 
               href="https://wa.me/201270506511" 
               target="_blank" 
@@ -83,7 +77,6 @@ export default function Footer() {
               <span>{data.phone}</span>
             </a>
 
-            {/* أيقونات السوشيال ميديا */}
             <div className="flex items-center gap-2.5">
               <a href="https://www.facebook.com/uniquews" target="_blank" rel="noopener noreferrer" title="Facebook" 
                  className="w-11 h-11 rounded-2xl bg-[#050505] border border-white/10 hover:border-blue-500 hover:bg-blue-600/10 text-gray-300 hover:text-blue-400 flex items-center justify-center transition-all shadow-lg">
@@ -103,10 +96,8 @@ export default function Footer() {
 
         </div>
 
-        {/* الجزء السفلي: الروابط السريعة والخدمات الاحترافية */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 pt-16">
           
-          {/* عمود الروابط السريعة */}
           <div>
             <h4 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-blue-500"></span>
@@ -128,7 +119,6 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* عمود الخدمات الاحترافية */}
           <div>
             <h4 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-blue-500"></span>
@@ -152,7 +142,6 @@ export default function Footer() {
 
         </div>
 
-        {/* حقوق النشر */}
         <div className="mt-16 pt-8 border-t border-white/5 text-center text-gray-500 text-sm">
           {data.rights}
         </div>

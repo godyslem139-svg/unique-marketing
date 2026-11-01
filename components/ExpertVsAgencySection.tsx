@@ -30,12 +30,10 @@ export default function ExpertVsAgencySection() {
   return (
     <section key={locale} className="relative w-full bg-[#000000] py-24 px-4 md:px-8 overflow-hidden font-sans">
       
-      {/* توهج كحلي خلفي */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[650px] bg-blue-600/10 blur-[150px] rounded-full pointer-events-none"></div>
 
       <div className="relative z-10 max-w-7xl mx-auto">
         
-        {/* مقدمة القسم */}
         <div className="max-w-4xl mx-auto text-center mb-16">
           <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-[#111] border border-blue-500/40 text-blue-400 text-sm font-bold mb-6 shadow-[0_0_15px_rgba(30,58,138,0.3)]">
             <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
@@ -53,10 +51,8 @@ export default function ExpertVsAgencySection() {
           </p>
         </div>
 
-        {/* كروت المقارنة (Side-by-Side Comparison) */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
           
-          {/* الخبير المستقل */}
           <div className="group relative p-8 md:p-12 rounded-[2.5rem] bg-[#050505] border border-white/5 hover:border-blue-500/40 transition-all duration-500 shadow-[0_10px_30px_rgba(0,0,0,0.8)] flex flex-col justify-between overflow-hidden">
             <div className="absolute top-0 right-0 w-32 h-32 bg-blue-600/5 blur-[50px] group-hover:bg-blue-600/15 transition-all"></div>
             
@@ -78,7 +74,6 @@ export default function ExpertVsAgencySection() {
             </div>
           </div>
 
-          {/* شركة التسويق */}
           <div className="group relative p-8 md:p-12 rounded-[2.5rem] bg-gradient-to-br from-[#0a0a0a] to-[#000000] border border-blue-500/40 hover:border-blue-500 transition-all duration-500 shadow-[0_10px_40px_rgba(30,58,138,0.2)] flex flex-col justify-between overflow-hidden">
             <div className="absolute top-0 right-0 w-32 h-32 bg-blue-600/15 blur-[50px] group-hover:bg-blue-600/30 transition-all"></div>
             
@@ -102,7 +97,6 @@ export default function ExpertVsAgencySection() {
 
         </div>
 
-        {/* صندوق كيفية اختيار الحل المناسب */}
         <div className="max-w-4xl mx-auto mb-20 p-8 md:p-12 rounded-[2.5rem] bg-[#050505] border border-white/10 relative overflow-hidden shadow-2xl">
           <div className="absolute inset-0 bg-[radial-gradient(#3b82f6_1px,transparent_1px)] [background-size:20px_20px] opacity-[0.03]"></div>
           <h3 className="relative z-10 text-2xl md:text-3xl font-bold text-white mb-4">

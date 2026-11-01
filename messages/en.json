@@ -613,6 +613,25 @@
     "webDesign": "Web Design & Development",
     "ecommerce": "E-commerce Stores",
     "rights": "All rights reserved © 2026 UNIQUE Digital Agency."
-  }
+  },
+  "Pricing": {
+  "badge": "Our Pricing & Offers",
+  "title": "Invest In Your Business Growth",
+  "subtitle": "Integrated packages designed specifically to meet your business needs.",
+  "bookNow": "Book Package Now",
+  "egpMonth": "EGP / Month",
+  "basicTitle": "Basic Package",
+  "basicSub": "Professional management for your presence & sales",
+  "proTitle": "Professional Package",
+  "proSub": "Professional management for your presence & sales",
+  "eliteTitle": "Elite Package",
+  "eliteSub": "Elite package for ultimate presence",
+  "reelsTitle": "Reels Packages",
+  "reelsSub": "Professional content & high engagement",
+  "badgeDiscount40": "40% OFF",
+  "badgeDiscount25": "25% OFF",
+  "badgeDiscount27": "27% OFF",
+  "badgeReels": "Reels Offers"
+}
 
 }

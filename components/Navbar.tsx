@@ -192,9 +192,9 @@ export default function Navbar() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="/projects" title={t.Navbar.projects} onClick={() => setIsMenuOpen(false)} className="flex items-center gap-3 text-gray-200 hover:text-blue-400 transition py-1">
+                  <Link href="/pricing" title={locale === "ar" ? "الباقات" : "Pricing"} onClick={() => setIsMenuOpen(false)} className="flex items-center gap-3 text-gray-200 hover:text-blue-400 transition py-1">
                     <span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
-                    {t.Navbar.projects}
+                    {locale === "ar" ? "الباقات والعروض" : "Pricing Packages"}
                   </Link>
                 </li>
                 <li>
@@ -217,7 +217,6 @@ export default function Navbar() {
                 </li>
               </ul>
               
-              {/* أيقونات السوشيال ميديا للموبايل داخل القائمة */}
               <div className="mt-8 flex lg:hidden items-center gap-3">
                 <a href="https://www.facebook.com/uniquews" target="_blank" rel="noopener noreferrer" title="Facebook - Unique Agency" className="w-10 h-10 rounded-full bg-black border border-blue-500/50 flex items-center justify-center text-blue-400">
                   <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"></path></svg>

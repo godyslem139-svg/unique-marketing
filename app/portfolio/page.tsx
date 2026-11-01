@@ -1,127 +1,155 @@
 'use client';
 
-import { useParams } from 'next/navigation';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 
 export default function PortfolioPage() {
-  const params = useParams();
-  const locale = params?.locale as string || 'ar';
-  const lang = locale === 'ar' ? 'ar' : 'en';
+  const [lang, setLang] = useState<'ar' | 'en'>('ar');
+
+  useEffect(() => {
+    const syncLanguage = () => {
+      const htmlLang = document.documentElement.lang;
+      const htmlDir = document.documentElement.dir;
+      if (htmlLang === 'en' || htmlDir === 'ltr') {
+        setLang('en');
+      } else {
+        setLang('ar');
+      }
+    };
+
+    // قراءة اللغة الحالية فور فتح الصفحة
+    syncLanguage();
+
+    // الاستماع لحدث الهيدر
+    window.addEventListener('languagechange', syncLanguage);
+
+    // مراقبة تغيير خصائص وسم <html> مباشرة لضمان التحويل اللحظي 100%
+    const observer = new MutationObserver(syncLanguage);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['lang', 'dir'],
+    });
+
+    return () => {
+      window.removeEventListener('languagechange', syncLanguage);
+      observer.disconnect();
+    };
+  }, []);
 
   const projects = [
     {
       title: lang === 'ar' ? 'وكالة الإعلانات والتسويق' : 'Ads Marketing Agency',
       image: '/ads.webp',
       link: 'https://www.adsagencymarketing.com/',
-      category: 'Marketing & Agency'
+      category: lang === 'ar' ? 'تسويق وإعلانات' : 'Marketing & Agency'
     },
     {
       title: lang === 'ar' ? 'شركة أحمد مصر للسياحة' : 'Ahmt Egypt Travel',
       image: '/ahmtegypttravel.webp',
       link: 'https://www.ahmtegypttravel.com/',
-      category: 'Tourism & Travel'
+      category: lang === 'ar' ? 'سياحة وسفر' : 'Tourism & Travel'
     },
     {
       title: lang === 'ar' ? 'مدونة كويت مارت' : 'Kuwait Mart Blog',
       image: '/blog-ar.kuwaitmart.com.webp',
       link: 'https://blog-ar.kuwaitmart.com/',
-      category: 'E-Commerce & Blog'
+      category: lang === 'ar' ? 'متجر ومدونة' : 'E-Commerce & Blog'
     },
     {
       title: lang === 'ar' ? 'البدر للعقارات' : 'Elbadr Real Estate',
       image: '/elbadrrealestate.com.webp',
       link: 'https://www.elbadrrealestate.com/',
-      category: 'Real Estate'
+      category: lang === 'ar' ? 'عقارات' : 'Real Estate'
     },
     {
       title: lang === 'ar' ? 'مؤسسة المملكة' : 'Elmamlaka Foundation',
       image: '/elmamlaka.com.webp',
       link: 'https://www.elmamlaka.com/',
-      category: 'Corporate'
+      category: lang === 'ar' ? 'شركات ومؤسسات' : 'Corporate'
     },
     {
       title: lang === 'ar' ? 'فاست موف الكويت' : 'Fast Move Kuwait',
       image: '/fastmovekw.com.webp',
       link: 'https://fastmovekw.com/',
-      category: 'Services & Logistics'
+      category: lang === 'ar' ? 'خدمات وشحن' : 'Services & Logistics'
     },
     {
       title: lang === 'ar' ? 'جولدن شيلد السعودية' : 'Gold Shield SA',
       image: '/goldshield-sa.com.webp',
       link: 'https://goldshield-sa.com/',
-      category: 'Security & Services'
+      category: lang === 'ar' ? 'خدمات وحماية' : 'Security & Services'
     },
     {
       title: lang === 'ar' ? 'حفلوري للمقاولات والخدمات' : 'Haf Lorry',
       image: '/haflorry.com.webp',
       link: 'https://haflorry.com/',
-      category: 'Transport & Services'
+      category: lang === 'ar' ? 'نقل وخدمات' : 'Transport & Services'
     },
     {
       title: lang === 'ar' ? 'موقع هالة سليم' : 'Hala Selim',
       image: '/halaselim.com.webp',
       link: 'https://www.halaselim.com/',
-      category: 'Personal Portfolio'
+      category: lang === 'ar' ? 'موقع شخصي' : 'Personal Portfolio'
     },
     {
       title: lang === 'ar' ? 'مؤسسة السبيعي للإنشاءات' : 'Alsubaie Establishment',
       image: '/httpselsubaie.com.webp',
       link: 'http://elsubaie.com/',
-      category: 'Construction & Industry'
+      category: lang === 'ar' ? 'مقاولات وإنشاءات' : 'Construction & Industry'
     },
     {
       title: lang === 'ar' ? 'جنان للسياحة والسفر' : 'Jinan Travels',
       image: '/jinantravels.com.webp',
       link: 'https://jinantravels.com/',
-      category: 'Tourism & Travel'
+      category: lang === 'ar' ? 'سياحة وسفر' : 'Tourism & Travel'
     },
     {
       title: lang === 'ar' ? 'لمسات للتصميم' : 'Lmsatt Design',
       image: '/lmsatt.com.webp',
       link: 'https://lmsatt.com/',
-      category: 'Design & Agency'
+      category: lang === 'ar' ? 'تصميم ووكالات' : 'Design & Agency'
     },
     {
       title: lang === 'ar' ? 'منصة قرآني للتعليم' : 'Quraaany Platform',
       image: '/quraaany.com.webp',
       link: 'https://quraaany.com/en',
-      category: 'Education'
+      category: lang === 'ar' ? 'منصة تعليمية' : 'Education'
     },
     {
       title: lang === 'ar' ? 'رحال للعلاقات والسفر' : 'Rahal Travel',
       image: '/rahalar.com.webp',
       link: 'https://rahalar.com/',
-      category: 'Tourism & Travel'
+      category: lang === 'ar' ? 'سياحة وسفر' : 'Tourism & Travel'
     },
     {
       title: lang === 'ar' ? 'بوابة الرياض' : 'Riyadh Gateway',
       image: '/riyadhgateway.com.webp',
       link: 'https://riyadhgateway.com/',
-      category: 'Directory & Services'
+      category: lang === 'ar' ? 'دليل وخدمات' : 'Directory & Services'
     },
     {
       title: lang === 'ar' ? 'تعقيم لتنظيف والخدمات' : 'Taatim Services',
       image: '/taatim.com.webp',
       link: 'https://taatim.com/',
-      category: 'Cleaning & Services'
+      category: lang === 'ar' ? 'تنظيف وخدمات' : 'Cleaning & Services'
     },
     {
       title: lang === 'ar' ? 'تاكسي 24 الكويت' : 'Taxi 24 Kuwait',
       image: '/taxi24-kw.com.webp',
       link: 'https://taxi24-kw.com/',
-      category: 'Transportation'
+      category: lang === 'ar' ? 'نقل وتوصيل' : 'Transportation'
     },
     {
       title: lang === 'ar' ? 'ذا لايت هاوس (الغوص والسياحة)' : 'The Light House',
       image: '/thelighthousee.webp',
       link: 'https://www.thelighthousee.com/en',
-      category: 'Tourism & Diving'
+      category: lang === 'ar' ? 'سياحة وغوص' : 'Tourism & Diving'
     },
     {
       title: lang === 'ar' ? 'موقع رنين التجاري' : 'Raneen Store',
       image: '/www.raneen.comar.webp',
       link: 'https://www.raneen.com/ar/',
-      category: 'E-Commerce'
+      category: lang === 'ar' ? 'متجر إلكتروني' : 'E-Commerce'
     },
   ];
 

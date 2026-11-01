@@ -27,18 +27,15 @@ export default function CommonMistakesSection() {
 
   if (!data || !data.mistakes) return null;
 
-  // أيقونات تحذيرية واحترافية لكل خطأ
   const icons = ["⚠️", "📉", "📱", "📝", "⚙️", "🕸️", "🔍"];
 
   return (
     <section key={locale} className="relative w-full bg-[#000000] py-24 px-4 md:px-8 overflow-hidden font-sans">
       
-      {/* توهج كحلي خافت لإيحاء التنبيه الذكي */}
       <div className="absolute top-1/3 right-1/4 w-[500px] h-[500px] bg-blue-600/10 blur-[150px] rounded-full pointer-events-none"></div>
 
       <div className="relative z-10 max-w-7xl mx-auto">
         
-        {/* مقدمة القسم */}
         <div className="max-w-4xl mx-auto text-center mb-20">
           <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-[#111] border border-blue-500/40 text-blue-400 text-sm font-bold mb-6 shadow-[0_0_15px_rgba(30,58,138,0.3)]">
             <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
@@ -56,7 +53,6 @@ export default function CommonMistakesSection() {
           </p>
         </div>
 
-        {/* شبكة الأخطاء (Bento Grid Style) */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-24">
           {data.mistakes.map((item: any, index: number) => {
             const isLast = index === data.mistakes.length - 1;
@@ -65,7 +61,6 @@ export default function CommonMistakesSection() {
                 key={index}
                 className={`group relative p-8 rounded-[2rem] bg-[#050505] border border-white/5 hover:border-blue-500/50 transition-all duration-500 hover:-translate-y-2 shadow-[0_10px_30px_rgba(0,0,0,0.6)] hover:shadow-[0_0_30px_rgba(30,58,138,0.25)] overflow-hidden flex flex-col justify-between ${isLast ? 'lg:col-span-1' : ''}`}
               >
-                {/* إضاءة كحلية خفيفة عند التمرير */}
                 <div className="absolute top-0 right-0 w-32 h-32 bg-blue-600/10 blur-[40px] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
 
                 <div className="relative z-10 flex flex-col gap-6">
@@ -88,7 +83,6 @@ export default function CommonMistakesSection() {
                   </div>
                 </div>
 
-                {/* علامة صغيرة توحي بتجنب الخطأ */}
                 <div className="mt-6 pt-4 border-t border-white/5 flex items-center justify-between text-xs text-gray-500">
                   <span className="flex items-center gap-1.5 text-blue-400 font-medium">
                     <span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
@@ -101,7 +95,6 @@ export default function CommonMistakesSection() {
           })}
         </div>
 
-        {/* قسم Call to Action الختامي */}
         <div className="relative max-w-5xl mx-auto group">
           <div className="absolute -inset-1 bg-gradient-to-r from-blue-600/30 via-blue-500/50 to-indigo-600/30 rounded-[2.5rem] blur opacity-30 group-hover:opacity-60 transition duration-1000"></div>
 

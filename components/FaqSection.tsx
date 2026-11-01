@@ -29,13 +29,11 @@ export default function FaqSection() {
 
   if (!data || !data.faqs) return null;
 
-  // فلترة الأسئلة بناءً على خانة البحث الفوري
   const filteredFaqs = data.faqs.filter((faq: any) => 
     faq.q.toLowerCase().includes(searchQuery.toLowerCase()) ||
     faq.a.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  // تجهيز كود الـ Schema (FAQPage) لمحركات البحث
   const faqSchema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -52,18 +50,15 @@ export default function FaqSection() {
   return (
     <section key={locale} className="relative w-full bg-[#000000] py-24 px-4 md:px-8 overflow-hidden font-sans">
       
-      {/* حقن سكيما جوجل في رأس الصفحة داخلياً */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
 
-      {/* توهج كحلي خلفي */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-blue-600/10 blur-[160px] rounded-full pointer-events-none"></div>
 
       <div className="relative z-10 max-w-5xl mx-auto">
         
-        {/* مقدمة القسم */}
         <div className="max-w-4xl mx-auto text-center mb-14">
           <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-[#111] border border-blue-500/40 text-blue-400 text-sm font-bold mb-6 shadow-[0_0_15px_rgba(30,58,138,0.3)]">
             <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
@@ -80,7 +75,6 @@ export default function FaqSection() {
             {data.intro}
           </p>
 
-          {/* شريط البحث الفوري التفاعلي (Live Search) */}
           <div className="relative max-w-2xl mx-auto">
             <div className="absolute inset-y-0 start-0 flex items-center ps-5 pointer-events-none text-gray-400">
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
@@ -95,7 +89,6 @@ export default function FaqSection() {
           </div>
         </div>
 
-        {/* قائمة الأسئلة والأجوبة (Accordion) */}
         <div className="space-y-4 mb-20">
           {filteredFaqs.length > 0 ? (
             filteredFaqs.map((faq: any, index: number) => {
@@ -132,7 +125,6 @@ export default function FaqSection() {
           )}
         </div>
 
-        {/* قسم Call to Action الختامي */}
         <div className="relative max-w-4xl mx-auto group">
           <div className="absolute -inset-1 bg-gradient-to-r from-blue-600/30 via-blue-500/50 to-indigo-600/30 rounded-[2.5rem] blur opacity-30 group-hover:opacity-60 transition duration-1000"></div>
 
