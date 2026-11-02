@@ -3,7 +3,7 @@ import AboutSeoSection from "@/components/AboutSeoSection";
 import PortfolioMarquee from "@/components/PortfolioMarquee";
 import SeoStrategiesSection from "@/components/SeoStrategiesSection";
 import WhySeoSection from "@/components/WhySeoSection";
-import HomePricing from "@/components/HomePricing"; // <-- استيراد سكشن الباقات
+import HomePricing from "@/components/HomePricing";
 import LiveDashboardSection from "@/components/LiveDashboardSection";
 import HowToChooseSeoSection from "@/components/owToChooseSeoSection";
 import HowWeOptimizeSection from "@/components/HowWeOptimizeSection";
@@ -16,16 +16,25 @@ import SeoServicesTableSection from "@/components/SeoServicesTableSection";
 import FaqSection from "@/components/FaqSection";
 import GeoKeywordsSection from "@/components/GeoKeywordsSection";
 
-export default function Home() {
+// استقبال الـ params لقراءة اللغة (ar أو en)
+export default async function Home({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}) {
+  const resolvedParams = await params;
+  const lang = resolvedParams.lang; // 'ar' أو 'en'
+
   return (
     <main>
-      <HeroSection />          {/* 1 */}
-      <AboutSeoSection />      {/* 2 */}
-      <PortfolioMarquee />     {/* 3 */}
-      <SeoStrategiesSection /> {/* 4 */}
-      <WhySeoSection />        {/* 5 */}
-      <HomePricing />          {/* 6 - سكشن الباقات الجديد */}
-      <LiveDashboardSection /> {/* 7 */}
+      {/* يمكنك تمرير الـ lang للمكونات إذا كانت تحتاجها */}
+      <HeroSection />
+      <AboutSeoSection  />
+      <PortfolioMarquee />
+      <SeoStrategiesSection />
+      <WhySeoSection />
+      <HomePricing />
+      <LiveDashboardSection />
       <HowToChooseSeoSection />
       <HowWeOptimizeSection />
       <SeoBenefitsSection />
@@ -34,7 +43,7 @@ export default function Home() {
       <ExpertVsAgencySection />
       <SeoCostSection />
       <SeoServicesTableSection />
-      <FaqSection />
+      <FaqSection/>
       <GeoKeywordsSection />
     </main>
   );
