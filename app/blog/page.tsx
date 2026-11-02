@@ -1,6 +1,3 @@
-'use client'
-
-import React, { useState, useEffect } from 'react'
 import { client } from '@/sanity/lib/client'
 import { defineQuery } from 'next-sanity'
 import Link from 'next/link'
@@ -18,51 +15,21 @@ const BLOG_INDEX_QUERY = defineQuery(`
   }
 `)
 
-export default function BlogIndexPage() {
-  const [posts, setPosts] = useState<any[]>([])
-  const [lang, setLang] = useState<'ar' | 'en'>('ar')
-
-  useEffect(() => {
-    client.fetch(BLOG_INDEX_QUERY).then((data) => {
-      setPosts(data || [])
-    }).catch((err) => console.error(err))
-  }, [])
-
-  useEffect(() => {
-    const updateLangFromDOM = () => {
-      const currentDir = document.documentElement.dir
-      const currentLangAttr = document.documentElement.lang
-      if (currentDir === 'ltr' || currentLangAttr === 'en') {
-        setLang('en')
-      } else {
-        setLang('ar')
-      }
-    }
-
-    updateLangFromDOM()
-    window.addEventListener('languagechange', updateLangFromDOM)
-    const observer = new MutationObserver(updateLangFromDOM)
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['lang', 'dir'] })
-
-    return () => {
-      window.removeEventListener('languagechange', updateLangFromDOM)
-      observer.disconnect()
-    }
-  }, [])
+export default async function BlogIndexPage() {
+  const posts = await client.fetch(BLOG_INDEX_QUERY).catch(() => [])
 
   return (
-    <main className={`min-h-screen bg-black text-white ${lang === 'ar' ? 'rtl' : 'ltr'}`} dir={lang === 'ar' ? 'rtl' : 'ltr'}>
+    <main className="min-h-screen bg-black text-white rtl" dir="rtl">
       <div className="px-6 py-28 max-w-7xl mx-auto">
         <h1 className="text-4xl md:text-5xl font-extrabold mb-12 text-center tracking-tight">
-          {lang === 'ar' ? 'المدونة ومقالات الخبراء' : 'Blog & Expert Articles'}
+          المدونة ومقالات الخبراء
         </h1>
         
         {posts && posts.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-24">
             {posts.map((post: any, idx: number) => {
-              const title = post.pageTitle?.[lang] || post.pageTitle?.ar || post.pageTitle?.en || 'مقال بدون عنوان'
+              const title = post.pageTitle?.ar || post.pageTitle?.en || 'مقال بدون عنوان'
               const currentSlug = post.slug?.current || ''
-              
               const rawSlug = currentSlug.startsWith('blog/') ? currentSlug.replace('blog/', '') : currentSlug
 
               if (!rawSlug) return null
@@ -72,10 +39,7 @@ export default function BlogIndexPage() {
               const heroVideoFile = heroSection?.bgVideoFileUrl
 
               return (
-                <div 
-                  key={idx} 
-                  className="bg-neutral-900 border border-neutral-800 rounded-3xl overflow-hidden hover:border-blue-500/50 transition duration-300 shadow-xl flex flex-col justify-between group"
-                >
+                <div key={idx} className="bg-neutral-900 border border-neutral-800 rounded-3xl overflow-hidden hover:border-blue-500/50 transition duration-300 shadow-xl flex flex-col justify-between group">
                   <div className="w-full h-48 relative overflow-hidden bg-neutral-950">
                     {heroVideoFile ? (
                       <video src={heroVideoFile} className="w-full h-full object-cover group-hover:scale-105 transition duration-500" muted playsInline />
@@ -83,7 +47,7 @@ export default function BlogIndexPage() {
                       <img src={heroImg} alt={title} className="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center text-neutral-600 text-xs">
-                        {lang === 'ar' ? '[صورة المقال]' : '[Article Image]'}
+                        [صورة المقال]
                       </div>
                     )}
                     <div className="absolute inset-0 bg-blue-600/10 pointer-events-none" />
@@ -98,8 +62,8 @@ export default function BlogIndexPage() {
                         href={`/blog/${rawSlug}`}
                         className="inline-flex items-center gap-2 px-5 py-3 bg-blue-600 text-white rounded-xl text-sm font-semibold hover:bg-blue-500 transition shadow-[0_0_15px_rgba(30,58,138,0.5)] w-full justify-center"
                       >
-                        <span>{lang === 'ar' ? 'اقرأ المقال' : 'Read Article'}</span>
-                        <span>{lang === 'ar' ? '←' : '→'}</span>
+                        <span>اقرأ المقال</span>
+                        <span>←</span>
                       </Link>
                     </div>
                   </div>
@@ -109,7 +73,7 @@ export default function BlogIndexPage() {
           </div>
         ) : (
           <div className="text-center text-gray-400 py-20 text-lg mb-24">
-            {lang === 'ar' ? 'لا توجد مقالات منشورة في المدونة حالياً.' : 'No blog posts available at the moment.'}
+            لا توجد مقالات منشورة في المدونة حالياً.
           </div>
         )}
       </div>

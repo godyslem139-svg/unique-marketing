@@ -1,6 +1,3 @@
-'use client'
-
-import React, { useState, useEffect } from 'react'
 import { client } from '@/sanity/lib/client'
 import { defineQuery } from 'next-sanity'
 import Link from 'next/link'
@@ -18,14 +15,8 @@ const BLOG_INDEX_QUERY = defineQuery(`
   }
 `)
 
-export default function EnBlogIndexPage() {
-  const [posts, setPosts] = useState<any[]>([])
-
-  useEffect(() => {
-    client.fetch(BLOG_INDEX_QUERY).then((data) => {
-      setPosts(data || [])
-    }).catch((err) => console.error(err))
-  }, [])
+export default async function EnBlogIndexPage() {
+  const posts = await client.fetch(BLOG_INDEX_QUERY).catch(() => [])
 
   return (
     <main className="min-h-screen bg-black text-white ltr" dir="ltr">
@@ -39,7 +30,6 @@ export default function EnBlogIndexPage() {
             {posts.map((post: any, idx: number) => {
               const title = post.pageTitle?.en || post.pageTitle?.ar || 'Untitled Article'
               const currentSlug = post.slug?.current || ''
-              
               const rawSlug = currentSlug.startsWith('blog/') ? currentSlug.replace('blog/', '') : currentSlug
 
               if (!rawSlug) return null
@@ -49,10 +39,7 @@ export default function EnBlogIndexPage() {
               const heroVideoFile = heroSection?.bgVideoFileUrl
 
               return (
-                <div 
-                  key={idx} 
-                  className="bg-neutral-900 border border-neutral-800 rounded-3xl overflow-hidden hover:border-blue-500/50 transition duration-300 shadow-xl flex flex-col justify-between group"
-                >
+                <div key={idx} className="bg-neutral-900 border border-neutral-800 rounded-3xl overflow-hidden hover:border-blue-500/50 transition duration-300 shadow-xl flex flex-col justify-between group">
                   <div className="w-full h-48 relative overflow-hidden bg-neutral-950">
                     {heroVideoFile ? (
                       <video src={heroVideoFile} className="w-full h-full object-cover group-hover:scale-105 transition duration-500" muted playsInline />
