@@ -2,23 +2,42 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter, usePathname } from "next/navigation";
 import ar from "@/messages/ar.json";
 import en from "@/messages/en.json";
 
 export default function Navbar() {
+  const router = useRouter();
+  const pathname = usePathname();
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [locale, setLocale] = useState<"ar" | "en">("ar");
+
+  // معرفة هل الموقع بالإنجليزية حالياً بناءً على المسار
+  const isEnglish = pathname.startsWith("/en");
+  const locale = isEnglish ? "en" : "ar";
   const t: any = locale === "ar" ? ar : en;
+
+  // دالة تغيير اللغة الحقيقية والتوجيه للمسار المناسب
   const toggleLanguage = () => {
-    const newLang = locale === "ar" ? "en" : "ar";
-    setLocale(newLang);
-    document.documentElement.lang = newLang;
-    document.documentElement.dir = newLang === "ar" ? "rtl" : "ltr";
-    
-    window.dispatchEvent(new Event("languagechange"));
+    if (isEnglish) {
+      // لو بالإنجليزية، احذف /en للرجوع للنسخة العربية
+      const newPath = pathname.replace(/^\/en/, "") || "/";
+      router.push(newPath);
+    } else {
+      // لو بالعربية، أضف /en للذهاب للنسخة الإنجليزية
+      const newPath = `/en${pathname === "/" ? "" : pathname}`;
+      router.push(newPath);
+    }
   };
+
+  // دالة مساعدة لضبط الروابط بناءً على اللغة الحالية
+  const getLocalizedPath = (path: string) => {
+    if (path === "/") return isEnglish ? "/en" : "/";
+    return isEnglish ? `/en${path}` : path;
+  };
+
   const servicesList = [
     { name: locale === "ar" ? "تحسين محركات البحث (SEO)" : "Search Engine Optimization (SEO)", slug: "seo" },
     { name: locale === "ar" ? "بناء الروابط الخلفية (Backlinks)" : "Backlinks Building", slug: "backlinks" },
@@ -26,7 +45,10 @@ export default function Navbar() {
     { name: locale === "ar" ? "إنشاء المتاجر الإلكترونية" : "E-commerce Stores", slug: "e-commerce" },
     { name: locale === "ar" ? "تطوير تطبيقات الجوال (Android)" : "Mobile Apps Development", slug: "android" },
     { name: locale === "ar" ? "كتابة المحتوى التسويقي" : "Marketing Content Writing", slug: "content-writing" },
-  ];
+  ].map((s) => ({
+    ...s,
+    path: isEnglish ? `/en/services/${s.slug}` : `/services/${s.slug}`,
+  }));
 
   return (
     <header className="sticky top-0 z-50 w-full bg-[#000000]/95 border-b border-blue-600/40 backdrop-blur-md shadow-[0_4px_30px_rgba(30,58,138,0.25)]">
@@ -82,7 +104,7 @@ export default function Navbar() {
           </button>
 
           <Link
-            href="/contact"
+            href={getLocalizedPath("/contact")}
             title={t.Navbar.contactUs}
             className="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#000000] border border-blue-500/50 text-blue-400 text-sm font-semibold hover:bg-blue-600/20 transition shadow-[0_0_15px_rgba(30,58,138,0.3)]"
           >
@@ -106,7 +128,7 @@ export default function Navbar() {
 
         </div>
 
-        <Link href="/" title={t.Navbar.agencyName} className="flex items-center gap-3 group">
+        <Link href={getLocalizedPath("/")} title={t.Navbar.agencyName} className="flex items-center gap-3 group">
           <div className="text-right hidden sm:block">
             <span className="block text-xs text-blue-400 font-bold tracking-widest">{t.Navbar.agencyName}</span>
             <span className="block text-[10px] text-gray-300">{t.Navbar.agencySub}</span>
@@ -161,7 +183,7 @@ export default function Navbar() {
                 {servicesList.map((service) => (
                   <Link
                     key={service.slug}
-                    href={`/services/${service.slug}`}
+                    href={service.path}
                     title={service.name}
                     onClick={() => setIsMenuOpen(false)}
                     className="p-3 rounded-xl bg-[#000000] border border-blue-500/30 text-gray-200 hover:text-blue-400 hover:border-blue-500 transition flex items-center justify-between group shadow-sm"
@@ -180,37 +202,37 @@ export default function Navbar() {
               </h3>
               <ul className="space-y-3 font-semibold">
                 <li>
-                  <Link href="/" title={t.Navbar.home} onClick={() => setIsMenuOpen(false)} className="flex items-center gap-3 text-gray-200 hover:text-blue-400 transition py-1">
+                  <Link href={getLocalizedPath("/")} title={t.Navbar.home} onClick={() => setIsMenuOpen(false)} className="flex items-center gap-3 text-gray-200 hover:text-blue-400 transition py-1">
                     <span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
                     {t.Navbar.home}
                   </Link>
                 </li>
                 <li>
-                  <Link href="/portfolio" title={t.Navbar.portfolio} onClick={() => setIsMenuOpen(false)} className="flex items-center gap-3 text-gray-200 hover:text-blue-400 transition py-1">
+                  <Link href={getLocalizedPath("/portfolio")} title={t.Navbar.portfolio} onClick={() => setIsMenuOpen(false)} className="flex items-center gap-3 text-gray-200 hover:text-blue-400 transition py-1">
                     <span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
                     {t.Navbar.portfolio}
                   </Link>
                 </li>
                 <li>
-                  <Link href="/pricing" title={locale === "ar" ? "الباقات" : "Pricing"} onClick={() => setIsMenuOpen(false)} className="flex items-center gap-3 text-gray-200 hover:text-blue-400 transition py-1">
+                  <Link href={getLocalizedPath("/pricing")} title={locale === "ar" ? "الباقات" : "Pricing"} onClick={() => setIsMenuOpen(false)} className="flex items-center gap-3 text-gray-200 hover:text-blue-400 transition py-1">
                     <span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
                     {locale === "ar" ? "الباقات والعروض" : "Pricing Packages"}
                   </Link>
                 </li>
                 <li>
-                  <Link href="/blog" title={t.Navbar.blog} onClick={() => setIsMenuOpen(false)} className="flex items-center gap-3 text-gray-200 hover:text-blue-400 transition py-1">
+                  <Link href={getLocalizedPath("/blog")} title={t.Navbar.blog} onClick={() => setIsMenuOpen(false)} className="flex items-center gap-3 text-gray-200 hover:text-blue-400 transition py-1">
                     <span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
                     {t.Navbar.blog}
                   </Link>
                 </li>
                 <li>
-                  <Link href="/contact" title={t.Navbar.contactUs} onClick={() => setIsMenuOpen(false)} className="flex items-center gap-3 text-gray-200 hover:text-blue-400 transition py-1">
+                  <Link href={getLocalizedPath("/contact")} title={t.Navbar.contactUs} onClick={() => setIsMenuOpen(false)} className="flex items-center gap-3 text-gray-200 hover:text-blue-400 transition py-1">
                     <span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
                     {t.Navbar.contactUs}
                   </Link>
                 </li>
                 <li>
-                  <Link href="/about" title={t.Navbar.about} onClick={() => setIsMenuOpen(false)} className="flex items-center gap-3 text-gray-200 hover:text-blue-400 transition py-1">
+                  <Link href={getLocalizedPath("/about")} title={t.Navbar.about} onClick={() => setIsMenuOpen(false)} className="flex items-center gap-3 text-gray-200 hover:text-blue-400 transition py-1">
                     <span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
                     {t.Navbar.about}
                   </Link>
