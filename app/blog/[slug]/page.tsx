@@ -1,97 +1,116 @@
-'use client'
-
-import React, { useState, useEffect } from 'react'
 import { client } from '@/sanity/lib/client'
+import { PAGE_QUERY } from '@/sanity/lib/queries'
 import { defineQuery } from 'next-sanity'
-import Link from 'next/link'
+import DynamicPageClient from '@/components/DynamicPageClient'
 import GeoKeywordsSection from '@/components/GeoKeywordsSection'
+import Link from 'next/link'
+import { notFound } from 'next/navigation'
 
-const BLOG_INDEX_QUERY = defineQuery(`
-  *[_type == "flexiblePage" && slug.current match "blog*"]{
+const SIDEBAR_POSTS_QUERY = defineQuery(`
+  *[_type == "flexiblePage" && slug.current match "blog*"] | order(_createdAt desc)[0...5]{
     pageTitle,
     slug,
-    sections[_type == "heroSection"][0]{
-      "bgImageUrl": bgImage.asset->url,
-      "bgVideoFileUrl": bgVideoFile.asset->url,
-      bgVideoUrl
-    }
+    _createdAt
   }
 `)
 
-export default function BlogIndexPage() {
-  const [posts, setPosts] = useState<any[]>([])
+export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
+  const resolvedParams = await params
+  const rawSlug = resolvedParams.slug
+  const fullSlug = rawSlug.startsWith('blog/') ? rawSlug : `blog/${rawSlug}`
+  
+  const [page, sidebarPosts] = await Promise.all([
+    client.fetch(PAGE_QUERY, { slug: fullSlug }),
+    client.fetch(SIDEBAR_POSTS_QUERY)
+  ])
 
-  useEffect(() => {
-    client.fetch(BLOG_INDEX_QUERY).then((data) => {
-      setPosts(data || [])
-    }).catch((err) => console.error(err))
-  }, [])
+  if (!page) {
+    notFound()
+  }
 
   return (
-    <main className="min-h-screen bg-black text-white rtl" dir="rtl">
-      <div className="px-6 py-28 max-w-7xl mx-auto">
-        <h1 className="text-4xl md:text-5xl font-extrabold mb-12 text-center tracking-tight">
-          المدونة ومقالات الخبراء
-        </h1>
-        
-        {posts && posts.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-24">
-            {posts.map((post: any, idx: number) => {
-              const title = post.pageTitle?.ar || post.pageTitle?.en || 'مقال بدون عنوان'
-              const currentSlug = post.slug?.current || ''
+    <div className="min-h-screen bg-black text-white rtl" dir="rtl">
+      <div className="max-w-[1400px] mx-auto px-4 md:px-8 py-12">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          
+          <main className="lg:col-span-8 w-full">
+            <DynamicPageClient page={page} />
+          </main>
+
+          <aside className="lg:col-span-4 space-y-8 sticky top-28">
+            
+            <div className="bg-neutral-900 border border-neutral-800 rounded-3xl p-6 shadow-xl">
+              <h3 className="text-lg font-extrabold mb-6 text-white border-b border-neutral-800 pb-3 flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
+                أجدد المقالات
+              </h3>
               
-              const rawSlug = currentSlug.startsWith('blog/') ? currentSlug.replace('blog/', '') : currentSlug
+              <div className="space-y-4">
+                {sidebarPosts && sidebarPosts.length > 0 ? (
+                  sidebarPosts.map((post: any, idx: number) => {
+                    const postSlug = post.slug?.current?.replace('blog/', '')
+                    if (!postSlug) return null
 
-              if (!rawSlug) return null
-
-              const heroSection = post.sections
-              const heroImg = heroSection?.bgImageUrl
-              const heroVideoFile = heroSection?.bgVideoFileUrl
-
-              return (
-                <div 
-                  key={idx} 
-                  className="bg-neutral-900 border border-neutral-800 rounded-3xl overflow-hidden hover:border-blue-500/50 transition duration-300 shadow-xl flex flex-col justify-between group"
-                >
-                  <div className="w-full h-48 relative overflow-hidden bg-neutral-950">
-                    {heroVideoFile ? (
-                      <video src={heroVideoFile} className="w-full h-full object-cover group-hover:scale-105 transition duration-500" muted playsInline />
-                    ) : heroImg ? (
-                      <img src={heroImg} alt={title} className="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center text-neutral-600 text-xs">
-                        [صورة المقال]
-                      </div>
-                    )}
-                    <div className="absolute inset-0 bg-blue-600/10 pointer-events-none" />
-                  </div>
-
-                  <div className="p-6 flex flex-col flex-grow justify-between">
-                    <h2 className="text-xl font-bold mb-6 text-white leading-snug line-clamp-2">
-                      {title}
-                    </h2>
-                    <div>
+                    return (
                       <Link 
-                        href={`/blog/${rawSlug}`}
-                        className="inline-flex items-center gap-2 px-5 py-3 bg-blue-600 text-white rounded-xl text-sm font-semibold hover:bg-blue-500 transition shadow-[0_0_15px_rgba(30,58,138,0.5)] w-full justify-center"
+                        key={idx}
+                        href={`/blog/${postSlug}`}
+                        className="block group p-3 rounded-2xl bg-neutral-950 border border-neutral-800/60 hover:border-blue-500/50 transition duration-300"
                       >
-                        <span>اقرأ المقال</span>
-                        <span>←</span>
+                        <h4 className="text-sm font-bold text-gray-200 group-hover:text-blue-400 transition line-clamp-2">
+                          {post.pageTitle?.ar || post.pageTitle?.en || 'مقال بدون عنوان'}
+                        </h4>
+                        <span className="text-xs text-neutral-500 mt-2 block">
+                          {new Date(post._createdAt).toLocaleDateString('ar-EG')}
+                        </span>
                       </Link>
-                    </div>
-                  </div>
-                </div>
-              )
-            })}
-          </div>
-        ) : (
-          <div className="text-center text-gray-400 py-20 text-lg mb-24">
-            لا توجد مقالات منشورة في المدونة حالياً.
-          </div>
-        )}
+                    )
+                  })
+                ) : (
+                  <p className="text-xs text-neutral-500 text-center py-4">لا توجد مقالات مضافة بعد.</p>
+                )}
+              </div>
+            </div>
+
+            <div className="bg-neutral-900 border border-neutral-800 rounded-3xl p-6 shadow-xl">
+              <h3 className="text-lg font-extrabold mb-6 text-white border-b border-neutral-800 pb-3 flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-indigo-500"></span>
+                الأكثر زيارة
+              </h3>
+              
+              <div className="space-y-4">
+                {sidebarPosts && sidebarPosts.length > 0 ? (
+                  sidebarPosts.slice().reverse().map((post: any, idx: number) => {
+                    const postSlug = post.slug?.current?.replace('blog/', '')
+                    if (!postSlug) return null
+
+                    return (
+                      <Link 
+                        key={idx}
+                        href={`/blog/${postSlug}`}
+                        className="flex items-center gap-3 p-3 rounded-2xl bg-neutral-950 border border-neutral-800/60 hover:border-indigo-500/50 transition duration-300 group"
+                      >
+                        <span className="text-lg font-black text-neutral-600 group-hover:text-indigo-400">
+                          0{idx + 1}
+                        </span>
+                        <h4 className="text-sm font-bold text-gray-200 group-hover:text-indigo-400 transition line-clamp-2">
+                          {post.pageTitle?.ar || post.pageTitle?.en || 'مقال بدون عنوان'}
+                        </h4>
+                      </Link>
+                    )
+                  })
+                ) : (
+                  <p className="text-xs text-neutral-500 text-center py-4">لا توجد بيانات متاحة.</p>
+                )}
+              </div>
+            </div>
+
+          </aside>
+
+        </div>
       </div>
 
       <GeoKeywordsSection />
-    </main>
+    </div>
   )
 }
