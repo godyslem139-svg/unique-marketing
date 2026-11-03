@@ -61,7 +61,6 @@ export default function RootLayout({
       data-scroll-behavior="smooth"
     >
       <head>
-        {/* الاتصال المسبق الضروري فقط لتسريع جلب الخطوط أو الصور الأساسية وتجنب تحذيرات Lighthouse */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
