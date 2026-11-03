@@ -14,25 +14,20 @@ export default function Navbar() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
-  // معرفة هل الموقع بالإنجليزية حالياً بناءً على المسار
   const isEnglish = pathname.startsWith("/en");
   const locale = isEnglish ? "en" : "ar";
   const t: any = locale === "ar" ? ar : en;
 
-  // دالة تغيير اللغة الحقيقية والتوجيه للمسار المناسب
   const toggleLanguage = () => {
     if (isEnglish) {
-      // لو بالإنجليزية، احذف /en للرجوع للنسخة العربية
       const newPath = pathname.replace(/^\/en/, "") || "/";
       router.push(newPath);
     } else {
-      // لو بالعربية، أضف /en للذهاب للنسخة الإنجليزية
       const newPath = `/en${pathname === "/" ? "" : pathname}`;
       router.push(newPath);
     }
   };
 
-  // دالة مساعدة لضبط الروابط بناءً على اللغة الحالية
   const getLocalizedPath = (path: string) => {
     if (path === "/") return isEnglish ? "/en" : "/";
     return isEnglish ? `/en${path}` : path;

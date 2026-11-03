@@ -1,26 +1,17 @@
-"use client";
-import { useState, useEffect } from "react";
+'use client';
+
+import { usePathname } from "next/navigation";
 import ar from "@/messages/ar.json";
 import en from "@/messages/en.json";
 
 export default function SeoTasksSection() {
-  const [locale, setLocale] = useState<"ar" | "en">("ar");
-
-  useEffect(() => {
-    const checkLang = () => {
-      const currentDir = document.documentElement.dir;
-      setLocale(currentDir === "ltr" ? "en" : "ar");
-    };
-    checkLang();
-    const observer = new MutationObserver(checkLang);
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["dir"] });
-    return () => observer.disconnect();
-  }, []);
+  const pathname = usePathname();
+  const isEnglish = pathname?.startsWith("/en");
+  const locale = isEnglish ? "en" : "ar";
 
   const t: any = locale === "ar" ? ar : en;
   const data = t.SeoTasks;
 
-  // في حال لم يتم حفظ نصوص SeoTasks في ملفات JSON بعد، سيظهر هذا التنبيه بدلاً من تعطل الموقع
   if (!data || !data.tasks) {
     return (
       <div className="py-20 text-center text-blue-400 font-bold bg-black w-full min-h-[50vh] flex items-center justify-center">
@@ -29,13 +20,11 @@ export default function SeoTasksSection() {
     );
   }
 
-  // تعريف الأيقونات بالترتيب
   const taskIcons = ["🔑", "📝", "⚙️", "🎯", "💡", "🧩", "🖼️", "🔗", "🕸️"];
 
   return (
     <section className="relative w-full bg-[#000000] py-24 px-4 md:px-8">
       
-      {/* مقدمة القسم */}
       <div className="max-w-4xl mx-auto text-center mb-20">
         <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-black/80 border border-blue-500/50 text-blue-400 text-sm font-bold mb-6 shadow-[0_0_20px_rgba(30,58,138,0.4)]">
           <span className="w-2.5 h-2.5 rounded-full bg-blue-500 animate-pulse"></span>
@@ -54,7 +43,6 @@ export default function SeoTasksSection() {
         </p>
       </div>
 
-      {/* الكروت المتراكمة (Sticky Stacking Cards) */}
       <div className="max-w-5xl mx-auto relative pb-32">
         {data.tasks.map((task: any, index: number) => (
           <div
@@ -62,22 +50,18 @@ export default function SeoTasksSection() {
             className="sticky top-[100px] w-full min-h-[60vh] md:min-h-[50vh] flex flex-col justify-center rounded-3xl bg-[#0a0a0a] border-t-2 border-blue-500 shadow-[0_-20px_40px_rgba(0,0,0,0.9)] overflow-hidden mb-12 transform transition-all duration-500 hover:scale-[1.01]"
             style={{ zIndex: index + 1 }}
           >
-            {/* تأثير الإضاءة الخلفية للكارت */}
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-blue-600/10 via-transparent to-transparent pointer-events-none"></div>
             
-            {/* رقم الكارت الشفاف الكبير في الخلفية */}
             <div className={`absolute bottom-[-10%] ${locale === 'ar' ? 'left-[-5%]' : 'right-[-5%]' } text-[180px] md:text-[250px] font-black text-white/[0.02] pointer-events-none leading-none select-none`}>
               {task.id}
             </div>
 
             <div className={`relative z-10 p-8 md:p-14 flex flex-col md:flex-row items-center gap-8 md:gap-16 ${locale === 'ar' ? 'text-right' : 'text-left'}`}>
               
-              {/* الأيقونة */}
               <div className="w-24 h-24 md:w-32 md:h-32 flex-shrink-0 rounded-2xl bg-black border border-blue-500/40 flex items-center justify-center text-5xl md:text-6xl shadow-[0_0_30px_rgba(30,58,138,0.2)]">
                 {taskIcons[index]}
               </div>
 
-              {/* نصوص الكارت */}
               <div className="flex-1">
                 <div className="flex items-center gap-4 mb-4">
                   <span className="text-xl font-black text-blue-400">{task.id}</span>
@@ -96,7 +80,6 @@ export default function SeoTasksSection() {
         ))}
       </div>
 
-      {/* خاتمة القسم */}
       <div className="max-w-4xl mx-auto text-center mt-8 p-8 md:p-12 rounded-3xl bg-black/60 border border-blue-500/30 shadow-[0_0_50px_rgba(30,58,138,0.1)] relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent to-blue-600/5 pointer-events-none"></div>
         <p className="relative z-10 text-gray-200 text-base md:text-xl leading-relaxed font-medium">

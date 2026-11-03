@@ -43,7 +43,6 @@ export default function ContactPage() {
     <main className="min-h-screen bg-black text-white py-28 px-6" dir="rtl">
       <div className="max-w-7xl mx-auto">
         
-        {/* رأس الصفحة */}
         <div className="text-center mb-16">
           <span className="inline-block px-4 py-1.5 mb-4 rounded-full bg-blue-600/20 border border-blue-500/40 text-blue-400 text-xs font-bold tracking-wider uppercase">
             تواصل معنا
@@ -58,7 +57,6 @@ export default function ContactPage() {
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           
-          {/* معلومات التواصل */}
           <div className="lg:col-span-5 bg-neutral-950 border border-neutral-800 p-8 sm:p-10 rounded-3xl shadow-2xl space-y-8">
             <h3 className="text-2xl font-black text-white mb-4">
               معلومات الاتصال المباشر

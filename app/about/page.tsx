@@ -11,12 +11,10 @@ export default function AboutPageAr() {
 
   const videos = ['/about.mp4', '/aboutus.mp4'];
 
-  // إعادة تشغيل الفيديو تلقائياً عند الانتقال بين الفيديوهين
   useEffect(() => {
     if (videoRef.current) {
       videoRef.current.load();
       videoRef.current.play().catch(() => {
-        // تجاوز حظر التشغيل التلقائي إن وجد
       });
     }
   }, [currentVideo]);
@@ -25,7 +23,6 @@ export default function AboutPageAr() {
     setCurrentVideo((prev) => (prev + 1) % videos.length);
   };
 
-  // إحصائيات الشركة
   const stats = [
     {
       number: '+15',
@@ -49,7 +46,6 @@ export default function AboutPageAr() {
     },
   ];
 
-  // الركائز والاختصاصات الأساسية
   const pillars = {
     web: {
       badge: 'تطوير المواقع والمتاجر',
@@ -89,7 +85,6 @@ export default function AboutPageAr() {
     },
   };
 
-  // المحطات التاريخية للشركة (15+ عاماً)
   const timeline = [
     {
       year: '2011',
@@ -118,7 +113,6 @@ export default function AboutPageAr() {
     },
   ];
 
-  // منهجية العمل
   const workflow = [
     {
       step: '01',
@@ -142,7 +136,6 @@ export default function AboutPageAr() {
     },
   ];
 
-  // القيم الجوهرية
   const coreValues = [
     {
       title: 'الشفافية المطلقة',
@@ -223,7 +216,6 @@ export default function AboutPageAr() {
       className="min-h-screen bg-black text-white selection:bg-blue-600 selection:text-white overflow-x-hidden"
       dir="rtl"
     >
-      {/* ==================== 1. قسم الهيرو مع تتابع الفيديوهين ==================== */}
       <section className="relative pt-28 pb-20 lg:pt-32 lg:pb-28 px-4 sm:px-6 lg:px-8 border-b border-blue-900/40 overflow-hidden">
         <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-blue-600/15 blur-[160px] rounded-full pointer-events-none" />
         <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-cyan-500/10 blur-[140px] rounded-full pointer-events-none" />
@@ -361,7 +353,6 @@ export default function AboutPageAr() {
         </div>
       </section>
 
-      {/* ==================== 2. الإحصائيات ==================== */}
       <section className="py-16 px-4 sm:px-6 lg:px-8 bg-neutral-950 border-b border-neutral-900">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -381,7 +372,6 @@ export default function AboutPageAr() {
         </div>
       </section>
 
-      {/* ==================== 3. من نحن ورؤيتنا ==================== */}
       <section className="py-24 px-4 sm:px-6 lg:px-8 relative">
         <div className="max-w-7xl mx-auto">
           <div className="text-center max-w-3xl mx-auto mb-16">
@@ -445,7 +435,6 @@ export default function AboutPageAr() {
         </div>
       </section>
 
-      {/* ==================== 4. التخصصات الأساسية ==================== */}
       <section className="py-24 px-4 sm:px-6 lg:px-8 bg-neutral-950 border-y border-neutral-900">
         <div className="max-w-7xl mx-auto">
           <div className="text-center max-w-3xl mx-auto mb-12">
@@ -545,7 +534,6 @@ export default function AboutPageAr() {
         </div>
       </section>
 
-      {/* ==================== 5. المحطات التاريخية ==================== */}
       <section className="py-24 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="text-center max-w-3xl mx-auto mb-16">
@@ -583,7 +571,6 @@ export default function AboutPageAr() {
         </div>
       </section>
 
-      {/* ==================== 6. منهجية العمل ==================== */}
       <section className="py-24 px-4 sm:px-6 lg:px-8 bg-neutral-950 border-y border-neutral-900">
         <div className="max-w-7xl mx-auto">
           <div className="text-center max-w-3xl mx-auto mb-16">
@@ -612,7 +599,6 @@ export default function AboutPageAr() {
         </div>
       </section>
 
-      {/* ==================== 7. القيم الجوهرية ==================== */}
       <section className="py-24 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="text-center max-w-3xl mx-auto mb-16">
@@ -641,7 +627,6 @@ export default function AboutPageAr() {
         </div>
       </section>
 
-      {/* ==================== 8. القطاعات ==================== */}
       <section className="py-24 px-4 sm:px-6 lg:px-8 bg-neutral-950 border-y border-neutral-900">
         <div className="max-w-7xl mx-auto">
           <div className="text-center max-w-3xl mx-auto mb-16">
@@ -670,7 +655,6 @@ export default function AboutPageAr() {
         </div>
       </section>
 
-      {/* ==================== 9. الأسئلة الشائعة ==================== */}
       <section className="py-24 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-14">
@@ -710,7 +694,6 @@ export default function AboutPageAr() {
         </div>
       </section>
 
-      {/* ==================== 10. الخاتمة والدعوة للتواصل ==================== */}
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto rounded-3xl bg-gradient-to-r from-blue-950 via-neutral-900 to-blue-950 border border-blue-500/40 p-10 sm:p-16 text-center relative overflow-hidden shadow-[0_0_60px_rgba(37,99,235,0.25)]">
           <div className="relative z-10 max-w-3xl mx-auto space-y-6">

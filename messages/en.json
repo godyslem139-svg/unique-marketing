@@ -39,13 +39,35 @@
     "btnConsultation": "Get Your Consultation Now",
     "btnPortfolio": "Explore Our Portfolio"
   },
-  "PortfolioSection": {
-    "title": "What is an SEO Company?",
-    "description": "An SEO company specializes in search engine optimization, aiming to enhance the visibility of websites in Google search results and reach target customers more effectively. SEO services are core elements of digital marketing strategies, especially with the increasing reliance of companies on search engines to reach their audience and improve rankings.",
-    "subtitle": "Our Digital Achievements Record",
-    "sectionTitle": "A Showcase of Our Successful Projects Engineered for Maximum Search Impact",
+  "PortfolioProjects": [
+    {
+    "title": "Our Digital Portfolio",
+    "description": "Explore our successful projects and digital achievements engineered for maximum impact.",
+    "subtitle": "Digital Portfolio",
+    "sectionTitle": "Our Featured Projects",
     "visitProject": "Visit Website"
   },
+  { "title": "Ads & Marketing Agency", "category": "Marketing & Ads", "image": "/ads.webp", "link": "https://www.adsagencymarketing.com/" },
+  { "title": "Ahmt Egypt Travel", "category": "Tourism & Travel", "image": "/ahmtegypttravel.webp", "link": "https://www.ahmtegypttravel.com/" },
+  { "title": "Kuwait Mart Blog", "category": "Store & Blog", "image": "/blog-ar.kuwaitmart.com.webp", "link": "https://blog-ar.kuwaitmart.com/" },
+  { "title": "Al Badr Real Estate", "category": "Real Estate", "image": "/elbadrrealestate.com.webp", "link": "https://www.elbadrrealestate.com/" },
+  { "title": "Al Mamlaka Company", "category": "Companies", "image": "/elmamlaka.com.webp", "link": "https://www.elmamlaka.com/" },
+  { "title": "Fastmove Kuwait", "category": "Shipping", "image": "/fastmovekw.com.webp", "link": "https://fastmovekw.com/" },
+  { "title": "Gold Shield Saudi", "category": "Services & Protection", "image": "/goldshield-sa.com.webp", "link": "https://goldshield-sa.com/" },
+  { "title": "Haflorry Contracting", "category": "Transport", "image": "/haflorry.com.webp", "link": "https://haflorry.com/" },
+  { "title": "Hala Selim Website", "category": "Personal", "image": "/halaselim.com.webp", "link": "https://www.halaselim.com/" },
+  { "title": "Al Subaie Construction", "category": "Contracting", "image": "/httpselsubaie.com.webp", "link": "http://elsubaie.com/" },
+  { "title": "Jinan Travels", "category": "Tourism & Travel", "image": "/jinantravels.com.webp", "link": "https://jinantravels.com/" },
+  { "title": "Lmsatt Design", "category": "Design Agency", "image": "/lmsatt.com.webp", "link": "https://lmsatt.com/" },
+  { "title": "Quraaany Platform", "category": "E-Learning", "image": "/quraaany.com.webp", "link": "https://quraaany.com/en" },
+  { "title": "Rahal Travel", "category": "Tourism & Travel", "image": "/rahalar.com.webp", "link": "https://rahalar.com/" },
+  { "title": "Riyadh Gateway", "category": "Directory", "image": "/riyadhgateway.com.webp", "link": "https://riyadhgateway.com/" },
+  { "title": "Taatim Cleaning", "category": "Cleaning Services", "image": "/taatim.com.webp", "link": "https://taatim.com/" },
+  { "title": "Taxi 24 Kuwait", "category": "Transport", "image": "/taxi24-kw.com.webp", "link": "https://taxi24-kw.com/" },
+  { "title": "The Light House", "category": "Diving & Tourism", "image": "/thelighthousee.webp", "link": "https://www.thelighthousee.com/en" },
+  { "title": "Raneen Store", "category": "E-Commerce", "image": "/www.raneen.comar.webp", "link": "https://www.raneen.com/ar/" }
+],
+  
   "SeoTasks": {
     "subtitle": "Tasks & Workflow",
     "title1": "What are the core tasks of ",

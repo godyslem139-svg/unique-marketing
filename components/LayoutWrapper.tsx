@@ -10,11 +10,9 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
   const isStudio = pathname?.startsWith('/studio')
 
   if (isStudio) {
-    // لو كنا داخل لوحة تحكم سانتي، اعرض الصفحة لوحدها بدون هيدر أو فوتر أو تأثيرات
     return <>{children}</>
   }
 
-  // لصفحات الموقع العادية، اعرض الهيدر والفوتر والثلوج بشكل طبيعي
   return (
     <>
       <Snow />

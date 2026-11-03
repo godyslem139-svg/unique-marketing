@@ -39,13 +39,29 @@
     "btnConsultation": "اطلب استشارتك الآن",
     "btnPortfolio": "استعرض مشاريعنا"
   },
-  "PortfolioSection": {
-    "title": "ما هي شركة سيو؟",
-    "description": "شركة سيو هي شركة متخصصة في تحسين محركات البحث، وتهدف إلى تعزيز ظهور المواقع الإلكترونية في نتائج البحث على Google والوصول إلى العملاء المستهدفين بشكل أكثر فعالية. وتُعد خدمات SEO من العناصر الأساسية في استراتيجيات التسويق الرقمي، خاصة مع تزايد اعتماد الشركات على محركات البحث للوصول إلى جمهورها وتحسين ترتيب مواقعها وجذب المزيد من الزيارات والعملاء المحتملين.",
-    "subtitle": "سجل إنجازاتنا الرقمية",
-    "sectionTitle": "نخبة مشاريعنا الناجحة التي قمنا بتطويرها وتحقيق أعلى عائد بحثي لها",
-    "visitProject": "زيارة الموقع"
-  },
+  "PortfolioProjects": [
+    {
+      "title": "سجل إنجازاتنا الرقمية",
+      "description": "استعرض نخبة مشاريعنا الناجحة التي قمنا بتطويرها وتحقيق أعلى عائد بحثي ورهان رقمي لها.",
+      "subtitle": "معرض الأعمال",
+      "sectionTitle": "مشاريعنا المميزة",
+      "visitProject": "زيارة الموقع"
+    },
+    { "title": "وكالة الإعلانات والتسويق", "category": "تسويق وإعلانات", "image": "/ads.webp", "link": "https://www.adsagencymarketing.com/" },
+    { "title": "شركة أحمد مصر للسياحة", "category": "سياحة وسفر", "image": "/ahmtegypttravel.webp", "link": "https://www.ahmtegypttravel.com/" },
+    { "title": "مدونة كويت مارت", "category": "متجر ومدونة", "image": "/blog-ar.kuwaitmart.com.webp", "link": "https://blog-ar.kuwaitmart.com/" },
+    { "title": "البدر للعقارات", "category": "عقارات", "image": "/elbadrrealestate.com.webp", "link": "https://www.elbadrrealestate.com/" },
+    { "title": "مؤسسة المملكة", "category": "شركات ومؤسسات", "image": "/elmamlaka.com.webp", "link": "https://www.elmamlaka.com/" },
+    { "title": "فاست موف الكويت", "category": "خدمات وشحن", "image": "/fastmovekw.com.webp", "link": "https://fastmovekw.com/" },
+  { "title": "لمسات للتصميم", "category": "تصميم ووكالات", "image": "/lmsatt.com.webp", "link": "https://lmsatt.com/" },
+  { "title": "منصة قرآني للتعليم", "category": "منصة تعليمية", "image": "/quraaany.com.webp", "link": "https://quraaany.com/en" },
+  { "title": "رحال للعلاقات والسفر", "category": "سياحة وسفر", "image": "/rahalar.com.webp", "link": "https://rahalar.com/" },
+  { "title": "بوابة الرياض", "category": "دليل وخدمات", "image": "/riyadhgateway.com.webp", "link": "https://riyadhgateway.com/" },
+  { "title": "تعقيم لتنظيف والخدمات", "category": "تنظيف وخدمات", "image": "/taatim.com.webp", "link": "https://taatim.com/" },
+  { "title": "تاكسي 24 الكويت", "category": "نقل وتوصيل", "image": "/taxi24-kw.com.webp", "link": "https://taxi24-kw.com/" },
+  { "title": "ذا لايت هاوس (الغوص والسياحة)", "category": "سياحة وغوص", "image": "/thelighthousee.webp", "link": "https://www.thelighthousee.com/en" },
+  { "title": "موقع رنين التجاري", "category": "متجر إلكتروني", "image": "/www.raneen.comar.webp", "link": "https://www.raneen.com/ar/" }
+],
   "SeoTasks": {
     "subtitle": "مهام وخطة العمل",
     "title1": "ما هي أهم مهام شركات ",

@@ -1,32 +1,19 @@
-"use client";
-import { useState, useEffect } from "react";
-import ar from "@/messages/ar.json";
-import en from "@/messages/en.json";
+'use client';
+
+import { usePathname } from 'next/navigation';
+import ar from '@/messages/ar.json';
+import en from '@/messages/en.json';
 
 export default function LiveDashboardSection() {
-  const [locale, setLocale] = useState<"ar" | "en">("ar");
+  const pathname = usePathname();
+  const isEnglish = pathname?.startsWith('/en');
+  const locale = isEnglish ? 'en' : 'ar';
 
-  useEffect(() => {
-    const checkLang = () => {
-      const currentDir = document.documentElement.dir;
-      setLocale(currentDir === "ltr" ? "en" : "ar");
-    };
-    checkLang();
-    window.addEventListener("languageChanged", checkLang);
-    const observer = new MutationObserver(checkLang);
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["dir"] });
-    return () => {
-      window.removeEventListener("languageChanged", checkLang);
-      observer.disconnect();
-    };
-  }, []);
-
-  const t: any = locale === "ar" ? ar : en;
+  const t: any = locale === 'ar' ? ar : en;
   const data = t.LiveDashboard;
 
   if (!data) return null;
 
-  // 1. الكونتنر الأول: سجلات ووردبريس وأدوات السيو (WordPress, Analytics, Search Console)
   const wpLogs = [
     `[INFO] WordPress Core updated to v6.6`,
     `[SUCCESS] Google Analytics (GA4) tag connected.`,
@@ -42,7 +29,6 @@ export default function LiveDashboardSection() {
   
   const infiniteLogs = [...wpLogs, ...wpLogs, ...wpLogs, ...wpLogs];
 
-  // 2. الكونتنر الثاني: هيكل ملفات Next.js (App Router)
   const nextFiles = [
     { status: "Layout", color: "text-purple-400 bg-purple-400/10 border-purple-400/20", icon: "🧩", path: "app/layout.tsx", tag: "SEO Metadata", desc: "Global layout with optimized OpenGraph" },
     { status: "Page", color: "text-blue-400 bg-blue-400/10 border-blue-400/20", icon: "📄", path: "app/page.tsx", tag: "RSC", desc: "Server-Side Rendered home page" },
@@ -55,14 +41,12 @@ export default function LiveDashboardSection() {
   const infiniteFiles = [...nextFiles, ...nextFiles, ...nextFiles, ...nextFiles];
 
   return (
-    <section key={locale} className="relative w-full bg-[#000000] py-24 px-4 md:px-8 overflow-hidden font-sans">
+    <section className="relative w-full bg-[#000000] py-24 px-4 md:px-8 overflow-hidden font-sans" dir={locale === 'ar' ? 'rtl' : 'ltr'}>
       
-      {/* توهج كحلي خلفي خفيف */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[60vw] max-w-[800px] max-h-[800px] bg-blue-600/10 blur-[120px] rounded-full pointer-events-none"></div>
 
       <div className="relative z-10 max-w-7xl mx-auto">
         
-        {/* العنوان والمقدمة */}
         <div className={`mb-16 max-w-4xl ${locale === 'ar' ? 'text-right' : 'text-left'}`}>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-normal text-white mb-8 tracking-tight">
             {data.title1}
@@ -85,10 +69,8 @@ export default function LiveDashboardSection() {
           </div>
         </div>
 
-        {/* الكونتينرز (Grid) */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 h-[600px]">
           
-          {/* الكونتينر الأيسر: WordPress & SEO Tools Logs */}
           <div className="relative w-full h-full rounded-[2rem] bg-[#050505] border border-blue-500/20 shadow-[0_0_40px_rgba(30,58,138,0.2)] overflow-hidden flex flex-col group">
             
             <div className="absolute top-8 left-1/2 -translate-x-1/2 z-20 w-[90%] max-w-[400px] rounded-2xl bg-[#111] border border-blue-500/30 p-2 flex items-center justify-between shadow-2xl backdrop-blur-md">
@@ -120,7 +102,7 @@ export default function LiveDashboardSection() {
                     return (
                       <div 
                         key={index} 
-                        className="font-mono text-[13px] md:text-sm text-gray-400 whitespace-nowrap opacity-90"
+                        className="font-mono text-[13px] md:text-sm text-gray-400 whitespace-nowrap opacity-90 text-start"
                         dangerouslySetInnerHTML={{ __html: coloredLog }}
                       />
                     );
@@ -130,7 +112,6 @@ export default function LiveDashboardSection() {
             </div>
           </div>
 
-          {/* الكونتينر الأيمن: Next.js File Structure */}
           <div className="relative w-full h-full rounded-[2rem] bg-[#050505] border border-blue-500/20 shadow-[0_0_40px_rgba(30,58,138,0.2)] overflow-hidden mask-image-y">
             
             <div className={`absolute top-0 bottom-0 w-px bg-blue-500/20 ${locale === 'ar' ? 'right-12' : 'left-12'}`}></div>

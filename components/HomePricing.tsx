@@ -1,28 +1,14 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useParams } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import Image from 'next/image';
 import ar from '@/messages/ar.json';
 import en from '@/messages/en.json';
 
 export default function HomePricing() {
-  const params = useParams();
-  const [locale, setLocale] = useState<'ar' | 'en'>('ar');
-
-  // مزامنة اللغة مع الهيدر أو الـ html tag
-  useEffect(() => {
-    const currentLang = document.documentElement.lang as 'ar' | 'en';
-    if (currentLang) setLocale(currentLang);
-
-    const handleLangChange = () => {
-      const newLang = document.documentElement.lang as 'ar' | 'en';
-      if (newLang) setLocale(newLang);
-    };
-
-    window.addEventListener('languagechange', handleLangChange);
-    return () => window.removeEventListener('languagechange', handleLangChange);
-  }, []);
+  const pathname = usePathname();
+  const isEnglish = pathname?.startsWith('/en');
+  const locale = isEnglish ? 'en' : 'ar';
 
   const t: any = locale === 'ar' ? ar : en;
   const pText = t.Pricing || {};
@@ -92,7 +78,6 @@ export default function HomePricing() {
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         
-        {/* عنوان السكشن */}
         <div className="text-center mb-16">
           <span className="inline-block px-4 py-1.5 mb-4 rounded-full bg-blue-600/20 border border-blue-500/40 text-blue-400 text-xs font-bold tracking-wider uppercase">
             {pText.badge || 'باقات الأسعار والعروض المميزة'}
@@ -105,14 +90,12 @@ export default function HomePricing() {
           </p>
         </div>
 
-        {/* شبكة الباقات الأربع */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {packages.map((pkg, idx) => (
             <div
               key={idx}
-              className="group relative bg-neutral-950 rounded-3xl overflow-hidden border border-neutral-800 shadow-2xl transition-all duration-500 hover:border-blue-500 hover:shadow-[0_0_40px_rgba(37,99,235,0.3)] hover:-translate-y-2 flex flex-col justify-between"
+              className="group relative bg-neutral-950 rounded-3xl overflow-hidden border border-neutral-800 shadow-2xl transition-all duration-500 hover:border-blue-500 hover:shadow-[0_0_40px_rgba(37,99,235,0.3)] hover:-translate-y-2 flex flex-col justify-between text-start"
             >
-              {/* صورة الباقة كاملة بدون أي قص وبشكل كبير */}
               <div className="relative w-full h-[400px] bg-black flex items-center justify-center p-3">
                 <Image
                   src={pkg.image}
@@ -122,12 +105,11 @@ export default function HomePricing() {
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
                   className="object-contain transition-transform duration-500 group-hover:scale-105"
                 />
-                <span className="absolute top-4 start-4 bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg z-10">
+                <span className={`absolute top-4 ${locale === 'ar' ? 'start-4' : 'start-4'} bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg z-10`}>
                   {pkg.badge}
                 </span>
               </div>
 
-              {/* تفاصيل الباقة والزر */}
               <div className="p-6 bg-neutral-900 border-t border-neutral-800 flex flex-col justify-between flex-grow">
                 <div>
                   <h3 className="text-xl font-extrabold text-white mb-2 group-hover:text-blue-400 transition-colors">
@@ -135,10 +117,10 @@ export default function HomePricing() {
                   </h3>
                   <p className="text-zinc-400 text-xs mb-4 leading-relaxed">{pkg.subtitle}</p>
                   
-                  <div className="flex items-baseline gap-2 mb-4 bg-black/40 p-3 rounded-xl border border-neutral-800">
+                  <div className={`flex items-baseline gap-2 mb-4 bg-black/40 p-3 rounded-xl border border-neutral-800 ${locale === 'ar' ? 'flex-row-reverse' : ''}`}>
                     <span className="text-2xl font-black text-blue-400">{pkg.price}</span>
                     <span className="text-xs text-zinc-400">{locale === 'ar' ? 'جنيه' : 'EGP'}</span>
-                    {pkg.oldPrice && <span className="text-xs text-red-400 line-through mr-auto">{pkg.oldPrice}</span>}
+                    {pkg.oldPrice && <span className={`text-xs text-red-400 line-through ${locale === 'ar' ? 'mr-auto' : 'ml-auto'}`}>{pkg.oldPrice}</span>}
                   </div>
 
                   <ul className="space-y-2 mb-6">
@@ -159,7 +141,7 @@ export default function HomePricing() {
                   className="inline-flex items-center justify-center gap-2 w-full py-3 px-4 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs transition-all duration-300 shadow-lg"
                 >
                   <span>{pText.bookNow || 'احجز الباقة الآن'}</span>
-                  <span>↗</span>
+                  <span>{locale === 'ar' ? '←' : '→'}</span>
                 </a>
               </div>
             </div>

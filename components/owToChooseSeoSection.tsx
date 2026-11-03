@@ -1,44 +1,29 @@
-"use client";
-import { useState, useEffect } from "react";
+'use client';
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import ar from "@/messages/ar.json";
 import en from "@/messages/en.json";
 
 export default function HowToChooseSeoSection() {
-  const [locale, setLocale] = useState<"ar" | "en">("ar");
-
-  useEffect(() => {
-    const checkLang = () => {
-      const currentDir = document.documentElement.dir;
-      setLocale(currentDir === "ltr" ? "en" : "ar");
-    };
-    checkLang();
-    window.addEventListener("languageChanged", checkLang);
-    const observer = new MutationObserver(checkLang);
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["dir"] });
-    return () => {
-      window.removeEventListener("languageChanged", checkLang);
-      observer.disconnect();
-    };
-  }, []);
+  const pathname = usePathname();
+  const isEnglish = pathname?.startsWith("/en");
+  const locale = isEnglish ? "en" : "ar";
 
   const t: any = locale === "ar" ? ar : en;
   const data = t.HowToChoose;
 
   if (!data || !data.cards) return null;
 
-  // أيقونات معبرة عن كل معيار
   const icons = ["🎯", "🏆", "⚙️", "💰", "📞", "👁️‍🗨️"];
 
   return (
-    <section key={locale} className="relative w-full bg-[#000000] py-24 px-4 md:px-8 overflow-hidden font-sans">
+    <section className="relative w-full bg-[#000000] py-24 px-4 md:px-8 overflow-hidden font-sans" dir={locale === 'ar' ? 'rtl' : 'ltr'}>
       
-      {/* توهج كحلي خلفي */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-600/10 blur-[150px] rounded-full pointer-events-none"></div>
 
       <div className="relative z-10 max-w-7xl mx-auto">
         
-        {/* مقدمة القسم */}
         <div className="max-w-4xl mx-auto text-center mb-16">
           <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-[#111] border border-blue-500/40 text-blue-400 text-sm font-bold mb-6 shadow-[0_0_15px_rgba(30,58,138,0.3)]">
             <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
@@ -59,14 +44,12 @@ export default function HowToChooseSeoSection() {
           </p>
         </div>
 
-        {/* شبكة المعايير (Grid) */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-24">
           {data.cards.map((card: any, index: number) => (
             <div 
               key={index}
-              className="group relative p-8 rounded-[2rem] bg-[#050505] border border-white/5 hover:border-blue-500/50 transition-all duration-500 hover:-translate-y-2 shadow-[0_10px_30px_rgba(0,0,0,0.5)] hover:shadow-[0_0_30px_rgba(30,58,138,0.25)] overflow-hidden"
+              className="group relative p-8 rounded-[2rem] bg-[#050505] border border-white/5 hover:border-blue-500/50 transition-all duration-500 hover:-translate-y-2 shadow-[0_10px_30px_rgba(0,0,0,0.5)] hover:shadow-[0_0_30px_rgba(30,58,138,0.25)] overflow-hidden text-start"
             >
-              {/* إضاءة زاوية عند الـ Hover */}
               <div className="absolute top-0 right-0 w-32 h-32 bg-blue-600/10 blur-[50px] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
 
               <div className="flex flex-col gap-6 relative z-10">
@@ -92,14 +75,11 @@ export default function HowToChooseSeoSection() {
           ))}
         </div>
 
-        {/* قسم Call to Action */}
         <div className="relative max-w-5xl mx-auto group">
-          {/* برواز مضيء خلفي */}
           <div className="absolute -inset-1 bg-gradient-to-r from-blue-600/30 via-blue-500/50 to-indigo-600/30 rounded-[2.5rem] blur opacity-30 group-hover:opacity-60 transition duration-1000 group-hover:duration-200 animate-pulse"></div>
           
           <div className="relative px-8 py-16 md:px-16 md:py-20 rounded-[2rem] bg-gradient-to-b from-[#0a0a0a] to-[#000000] border border-blue-500/40 flex flex-col md:flex-row items-center justify-between gap-10 overflow-hidden shadow-[0_0_50px_rgba(30,58,138,0.3)]">
             
-            {/* تأثير خلفية */}
             <div className="absolute inset-0 bg-[radial-gradient(#3b82f6_1px,transparent_1px)] [background-size:20px_20px] opacity-[0.03]"></div>
 
             <div className={`relative z-10 flex-1 ${locale === 'ar' ? 'text-right' : 'text-left'}`}>
@@ -113,10 +93,9 @@ export default function HowToChooseSeoSection() {
 
             <div className="relative z-10 shrink-0">
               <Link 
-                href="/contact"
+                href={isEnglish ? "/en/contact" : "/contact"}
                 className="relative inline-flex items-center justify-center px-8 py-5 text-lg font-black text-white bg-blue-600 rounded-full overflow-hidden shadow-[0_0_25px_rgba(30,58,138,0.6)] hover:shadow-[0_0_50px_rgba(59,130,246,0.9)] hover:scale-105 transition-all duration-300 border border-blue-500"
               >
-                {/* تأثير لمعة تتحرك على الزر */}
                 <span className="absolute w-0 h-0 transition-all duration-500 ease-out bg-white rounded-full group-hover:w-56 group-hover:h-56 opacity-10"></span>
                 <span className="relative flex items-center gap-2">
                   {data.ctaBtn}

@@ -1,43 +1,27 @@
-"use client";
-import { useState, useEffect } from "react";
+'use client';
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import ar from "@/messages/ar.json";
 import en from "@/messages/en.json";
 
 export default function WhySeoSection() {
-  const [locale, setLocale] = useState<"ar" | "en">("ar");
-
-  useEffect(() => {
-    const checkLang = () => {
-      const currentDir = document.documentElement.dir;
-      setLocale(currentDir === "ltr" ? "en" : "ar");
-    };
-    checkLang();
-    window.addEventListener("languageChanged", checkLang);
-    const observer = new MutationObserver(checkLang);
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["dir"] });
-    
-    return () => {
-      window.removeEventListener("languageChanged", checkLang);
-      observer.disconnect();
-    };
-  }, []);
+  const pathname = usePathname();
+  const isEnglish = pathname?.startsWith("/en");
+  const locale = isEnglish ? "en" : "ar";
 
   const t: any = locale === "ar" ? ar : en;
   const data = t.WhySeo;
 
   if (!data || !data.cards) return null;
 
-  // أيقونات مميزة لكل كارت بالترتيب
   const icons = ["🚀", "📈", "🤝", "🎯", "💻", "💰"];
 
   return (
-    <section key={locale} className="relative w-full bg-[#000000] py-24 px-4 md:px-8 overflow-hidden">
+    <section className="relative w-full bg-[#000000] py-24 px-4 md:px-8 overflow-hidden font-sans" dir={locale === 'ar' ? 'rtl' : 'ltr'}>
       
-      {/* توهج كحلي خلفي ناعم للقسم بأكمله */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-blue-600/10 blur-[120px] rounded-full pointer-events-none"></div>
 
-      {/* عنوان ومقدمة القسم */}
       <div className="relative z-10 max-w-4xl mx-auto text-center mb-16">
         <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-black/80 border border-blue-500/50 text-blue-400 text-sm font-bold mb-6 shadow-[0_0_20px_rgba(30,58,138,0.4)]">
           <span className="w-2.5 h-2.5 rounded-full bg-blue-500 animate-pulse"></span>
@@ -53,18 +37,15 @@ export default function WhySeoSection() {
         </p>
       </div>
 
-      {/* شبكة الكروت المتجاورة (Grid) */}
       <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-24">
         {data.cards.map((card: any, index: number) => (
           <div 
             key={card.id}
-            className="group relative p-8 rounded-3xl bg-gradient-to-br from-[#0f0f0f] to-[#000000] border border-blue-500/20 hover:border-blue-500/80 transition-all duration-500 hover:-translate-y-2 shadow-[0_0_15px_rgba(30,58,138,0.1)] hover:shadow-[0_0_40px_rgba(30,58,138,0.3)] overflow-hidden flex flex-col h-full"
+            className="group relative p-8 rounded-3xl bg-gradient-to-br from-[#0f0f0f] to-[#000000] border border-blue-500/20 hover:border-blue-500/80 transition-all duration-500 hover:-translate-y-2 shadow-[0_0_15px_rgba(30,58,138,0.1)] hover:shadow-[0_0_40px_rgba(30,58,138,0.3)] overflow-hidden flex flex-col h-full text-start"
           >
-            {/* إضاءة داخلية تظهر عند التمرير (Hover) */}
             <div className="absolute inset-0 bg-gradient-to-t from-blue-600/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
 
             <div className="relative z-10 flex flex-col h-full">
-              {/* الأيقونة ورقم الكارت */}
               <div className="flex items-center justify-between mb-6">
                 <div className="w-16 h-16 rounded-2xl bg-black border border-blue-500/30 flex items-center justify-center text-3xl shadow-[0_0_15px_rgba(30,58,138,0.2)] group-hover:scale-110 group-hover:border-blue-500 transition-all duration-500">
                   {icons[index]}
@@ -74,7 +55,6 @@ export default function WhySeoSection() {
                 </span>
               </div>
 
-              {/* نصوص الكارت */}
               <h3 className="text-xl md:text-2xl font-bold text-white mb-4 group-hover:text-blue-400 transition-colors duration-300">
                 {card.title}
               </h3>
@@ -86,11 +66,9 @@ export default function WhySeoSection() {
         ))}
       </div>
 
-      {/* قسم الـ Call To Action الختامي (بتصميم فخم وتوهج كحلي) */}
       <div className="relative z-10 max-w-5xl mx-auto rounded-3xl p-1 bg-gradient-to-r from-transparent via-blue-500/50 to-transparent shadow-[0_0_60px_rgba(30,58,138,0.2)] hover:shadow-[0_0_80px_rgba(30,58,138,0.4)] transition-all duration-500">
         <div className="rounded-[23px] bg-[#050505] p-8 md:p-14 flex flex-col md:flex-row items-center justify-between gap-10 relative overflow-hidden">
           
-          {/* خلفية شبكية خفيفة للـ CTA */}
           <div className="absolute inset-0 bg-[linear-gradient(to_right,#3b82f605_1px,transparent_1px),linear-gradient(to_bottom,#3b82f605_1px,transparent_1px)] bg-[size:2rem_2rem] pointer-events-none"></div>
 
           <div className={`relative z-10 flex-1 ${locale === 'ar' ? 'text-right' : 'text-left'}`}>
@@ -104,11 +82,10 @@ export default function WhySeoSection() {
 
           <div className="relative z-10 shrink-0 w-full md:w-auto">
             <Link 
-              href="/contact"
+              href={isEnglish ? "/en/contact" : "/contact"}
               title={data.ctaBtn}
               className="group relative flex items-center justify-center gap-3 w-full md:w-auto px-8 py-5 rounded-2xl bg-blue-600 text-white font-black text-lg shadow-[0_0_25px_rgba(30,58,138,0.6)] hover:shadow-[0_0_50px_rgba(59,130,246,0.9)] hover:scale-105 transition-all duration-300 overflow-hidden border border-blue-500"
             >
-              {/* لمعة تتحرك داخل الزر */}
               <span className="absolute top-0 left-[-100%] w-1/2 h-full bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-[-45deg] group-hover:animate-shine"></span>
               <span>{data.ctaBtn}</span>
               <span className={`transition-transform duration-300 ${locale === 'ar' ? 'group-hover:-translate-x-2' : 'group-hover:translate-x-2'}`}>
@@ -120,7 +97,6 @@ export default function WhySeoSection() {
         </div>
       </div>
 
-      {/* Animation للزر */}
       <style jsx global>{`
         @keyframes shine {
           100% { left: 200%; }

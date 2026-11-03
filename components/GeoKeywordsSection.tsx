@@ -1,26 +1,14 @@
-"use client";
-import { useState, useEffect } from "react";
+'use client'
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import ar from "@/messages/ar.json";
 import en from "@/messages/en.json";
 
 export default function GeoKeywordsSection() {
-  const [locale, setLocale] = useState<"ar" | "en">("ar");
-
-  useEffect(() => {
-    const checkLang = () => {
-      const currentDir = document.documentElement.dir;
-      setLocale(currentDir === "ltr" ? "en" : "ar");
-    };
-    checkLang();
-    window.addEventListener("languageChanged", checkLang);
-    const observer = new MutationObserver(checkLang);
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["dir"] });
-    return () => {
-      window.removeEventListener("languageChanged", checkLang);
-      observer.disconnect();
-    };
-  }, []);
+  const pathname = usePathname();
+  const isEnglish = pathname?.startsWith("/en");
+  const locale = isEnglish ? "en" : "ar";
 
   const t: any = locale === "ar" ? ar : en;
   const data = t.GeoKeywords;
@@ -28,7 +16,7 @@ export default function GeoKeywordsSection() {
   if (!data || !data.items) return null;
 
   return (
-    <section key={locale} className="relative w-full bg-[#000000] py-24 px-4 md:px-8 overflow-hidden font-sans">
+    <section className="relative w-full bg-[#000000] py-24 px-4 md:px-8 overflow-hidden font-sans" dir={locale === 'ar' ? 'rtl' : 'ltr'}>
       
       {/* خلفية بتوهج كحلي فخم */}
       <div className="absolute inset-0 bg-blue-600/5 pointer-events-none"></div>
@@ -54,15 +42,13 @@ export default function GeoKeywordsSection() {
           </p>
         </div>
 
-        {/* شبكة الكلمات المفتاحية في مستطيلات شيك جداً وبارزة */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {data.items.map((item: any, index: number) => (
             <Link
               key={index}
-              href={`/${item.slug}`}
+              href={isEnglish ? `/en/${item.slug}` : `/${item.slug}`}
               className="group relative px-6 py-4 rounded-2xl bg-gradient-to-r from-[#0a0f1d] to-[#050505] border border-blue-500/30 hover:border-blue-500 hover:bg-blue-600 transition-all duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.8)] hover:shadow-[0_0_30px_rgba(59,130,246,0.7)] flex items-center justify-center text-center overflow-hidden"
             >
-              {/* لمعة داخلية */}
               <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></span>
               
               <span className="relative z-10 text-white group-hover:text-white font-bold text-sm md:text-base tracking-wide transition-colors duration-300">

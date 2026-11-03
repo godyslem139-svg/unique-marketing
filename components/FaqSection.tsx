@@ -1,28 +1,18 @@
-"use client";
-import { useState, useEffect } from "react";
+'use client'
+
+import { useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import ar from "@/messages/ar.json";
 import en from "@/messages/en.json";
 
 export default function FaqSection() {
-  const [locale, setLocale] = useState<"ar" | "en">("ar");
+  const pathname = usePathname();
+  const isEnglish = pathname?.startsWith("/en");
+  const locale = isEnglish ? "en" : "ar";
+
   const [searchQuery, setSearchQuery] = useState("");
   const [openIndex, setOpenIndex] = useState<number | null>(0); // فتح أول سؤال افتراضياً
-
-  useEffect(() => {
-    const checkLang = () => {
-      const currentDir = document.documentElement.dir;
-      setLocale(currentDir === "ltr" ? "en" : "ar");
-    };
-    checkLang();
-    window.addEventListener("languageChanged", checkLang);
-    const observer = new MutationObserver(checkLang);
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["dir"] });
-    return () => {
-      window.removeEventListener("languageChanged", checkLang);
-      observer.disconnect();
-    };
-  }, []);
 
   const t: any = locale === "ar" ? ar : en;
   const data = t.FaqSection;
@@ -48,7 +38,7 @@ export default function FaqSection() {
   };
 
   return (
-    <section key={locale} className="relative w-full bg-[#000000] py-24 px-4 md:px-8 overflow-hidden font-sans">
+    <section className="relative w-full bg-[#000000] py-24 px-4 md:px-8 overflow-hidden font-sans" dir={locale === 'ar' ? 'rtl' : 'ltr'}>
       
       <script
         type="application/ld+json"
@@ -100,7 +90,7 @@ export default function FaqSection() {
                 >
                   <button
                     onClick={() => setOpenIndex(isOpen ? null : index)}
-                    className="w-full p-6 md:p-8 flex items-center justify-between text-right gap-6 transition"
+                    className="w-full p-6 md:p-8 flex items-center justify-between text-start gap-6 transition"
                   >
                     <span className="text-lg md:text-xl font-bold text-white group-hover:text-blue-400 transition-colors">
                       {faq.q}
@@ -111,7 +101,7 @@ export default function FaqSection() {
                   </button>
 
                   {isOpen && (
-                    <div className="px-6 pb-8 md:px-8 text-gray-300 text-base md:text-lg leading-relaxed border-t border-white/5 pt-4 animate-fadeIn">
+                    <div className="px-6 pb-8 md:px-8 text-gray-300 text-base md:text-lg leading-relaxed border-t border-white/5 pt-4 animate-fadeIn text-start">
                       {faq.a}
                     </div>
                   )}
@@ -141,7 +131,7 @@ export default function FaqSection() {
 
             <div className="relative z-10 shrink-0 w-full md:w-auto">
               <Link 
-                href="/contact"
+                href={isEnglish ? "/en/contact" : "/contact"}
                 className="relative inline-flex items-center justify-center w-full md:w-auto px-8 py-5 text-base font-black text-white bg-blue-600 rounded-2xl overflow-hidden shadow-[0_0_25px_rgba(30,58,138,0.6)] hover:shadow-[0_0_50px_rgba(59,130,246,0.9)] hover:scale-105 transition-all duration-300 group/btn border border-blue-500"
               >
                 <span className="absolute w-0 h-0 transition-all duration-500 ease-out bg-white rounded-full group-hover/btn:w-64 group-hover/btn:h-64 opacity-20"></span>

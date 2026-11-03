@@ -1,27 +1,15 @@
-"use client";
-import { useState, useEffect } from "react";
+'use client'
+
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import ar from "@/messages/ar.json";
 import en from "@/messages/en.json";
 
 export default function Footer() {
-  const [locale, setLocale] = useState<"ar" | "en">("ar");
-
-  useEffect(() => {
-    const checkLang = () => {
-      const currentDir = document.documentElement.dir;
-      setLocale(currentDir === "ltr" ? "en" : "ar");
-    };
-    checkLang();
-    window.addEventListener("languageChanged", checkLang);
-    const observer = new MutationObserver(checkLang);
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["dir"] });
-    return () => {
-      window.removeEventListener("languageChanged", checkLang);
-      observer.disconnect();
-    };
-  }, []);
+  const pathname = usePathname();
+  const isEnglish = pathname?.startsWith("/en");
+  const locale = isEnglish ? "en" : "ar";
 
   const t: any = locale === "ar" ? ar : en;
   const data = t.Footer;
@@ -29,7 +17,7 @@ export default function Footer() {
   if (!data) return null;
 
   return (
-    <footer key={locale} className="relative w-full bg-[#000000] pt-20 pb-10 px-4 md:px-8 border-t border-blue-600/30 font-sans overflow-hidden">
+    <footer className="relative w-full bg-[#000000] pt-20 pb-10 px-4 md:px-8 border-t border-blue-600/30 font-sans overflow-hidden" dir={locale === 'ar' ? 'rtl' : 'ltr'}>
       
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-blue-600/10 blur-[120px] rounded-full pointer-events-none"></div>
 
@@ -104,16 +92,16 @@ export default function Footer() {
               {data.quickLinksTitle}
             </h4>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <Link href="/" className="px-6 py-4 rounded-2xl bg-[#050505] border border-white/5 hover:border-blue-500 hover:bg-blue-600/10 text-gray-300 hover:text-white text-center font-medium transition-all shadow-md">
+              <Link href={isEnglish ? "/en" : "/"} className="px-6 py-4 rounded-2xl bg-[#050505] border border-white/5 hover:border-blue-500 hover:bg-blue-600/10 text-gray-300 hover:text-white text-center font-medium transition-all shadow-md">
                 {data.aboutUs}
               </Link>
-              <Link href="/services/seo" className="px-6 py-4 rounded-2xl bg-[#050505] border border-white/5 hover:border-blue-500 hover:bg-blue-600/10 text-gray-300 hover:text-white text-center font-medium transition-all shadow-md">
+              <Link href={isEnglish ? "/en/blog" : "/blog"} className="px-6 py-4 rounded-2xl bg-[#050505] border border-white/5 hover:border-blue-500 hover:bg-blue-600/10 text-gray-300 hover:text-white text-center font-medium transition-all shadow-md">
                 {data.services}
               </Link>
-              <Link href="/portfolio" className="px-6 py-4 rounded-2xl bg-[#050505] border border-white/5 hover:border-blue-500 hover:bg-blue-600/10 text-gray-300 hover:text-white text-center font-medium transition-all shadow-md">
+              <Link href={isEnglish ? "/en/portfolio" : "/portfolio"} className="px-6 py-4 rounded-2xl bg-[#050505] border border-white/5 hover:border-blue-500 hover:bg-blue-600/10 text-gray-300 hover:text-white text-center font-medium transition-all shadow-md">
                 {data.portfolio}
               </Link>
-              <Link href="/contact" className="px-6 py-4 rounded-2xl bg-[#050505] border border-white/5 hover:border-blue-500 hover:bg-blue-600/10 text-gray-300 hover:text-white text-center font-medium transition-all shadow-md">
+              <Link href={isEnglish ? "/en/contact" : "/contact"} className="px-6 py-4 rounded-2xl bg-[#050505] border border-white/5 hover:border-blue-500 hover:bg-blue-600/10 text-gray-300 hover:text-white text-center font-medium transition-all shadow-md">
                 {data.contactUs}
               </Link>
             </div>

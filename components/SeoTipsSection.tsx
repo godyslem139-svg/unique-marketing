@@ -1,26 +1,14 @@
-"use client";
-import { useState, useEffect } from "react";
+'use client';
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import ar from "@/messages/ar.json";
 import en from "@/messages/en.json";
 
 export default function SeoTipsSection() {
-  const [locale, setLocale] = useState<"ar" | "en">("ar");
-
-  useEffect(() => {
-    const checkLang = () => {
-      const currentDir = document.documentElement.dir;
-      setLocale(currentDir === "ltr" ? "en" : "ar");
-    };
-    checkLang();
-    window.addEventListener("languageChanged", checkLang);
-    const observer = new MutationObserver(checkLang);
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["dir"] });
-    return () => {
-      window.removeEventListener("languageChanged", checkLang);
-      observer.disconnect();
-    };
-  }, []);
+  const pathname = usePathname();
+  const isEnglish = pathname?.startsWith("/en");
+  const locale = isEnglish ? "en" : "ar";
 
   const t: any = locale === "ar" ? ar : en;
   const data = t.SeoTips;
@@ -30,14 +18,12 @@ export default function SeoTipsSection() {
   const icons = ["🔑", "✍️", "🏷️", "🔗", "⚡", "📱", "🖼️", "⚙️", "🌐", "🔄", "📍", "📊"];
 
   return (
-    <section key={locale} className="relative w-full bg-[#000000] py-24 px-4 md:px-8 overflow-hidden font-sans">
+    <section className="relative w-full bg-[#000000] py-24 px-4 md:px-8 overflow-hidden font-sans" dir={locale === 'ar' ? 'rtl' : 'ltr'}>
       
-      {/* توهج كحلي خلفي ناعم */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-blue-600/10 blur-[160px] rounded-full pointer-events-none"></div>
 
       <div className="relative z-10 max-w-7xl mx-auto">
         
-        {/* مقدمة القسم */}
         <div className="max-w-4xl mx-auto text-center mb-20">
           <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-[#111] border border-blue-500/40 text-blue-400 text-sm font-bold mb-6 shadow-[0_0_15px_rgba(30,58,138,0.3)]">
             <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
@@ -55,14 +41,12 @@ export default function SeoTipsSection() {
           </p>
         </div>
 
-        {/* شبكة النصائح (12 كارت فخم متناسق) */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
           {data.tips.map((tip: any, index: number) => (
             <div 
               key={index}
-              className="group relative p-8 rounded-[2rem] bg-[#050505] border border-white/5 hover:border-blue-500/60 transition-all duration-500 hover:-translate-y-2 shadow-[0_10px_30px_rgba(0,0,0,0.7)] hover:shadow-[0_0_35px_rgba(30,58,138,0.25)] overflow-hidden flex flex-col justify-between"
+              className="group relative p-8 rounded-[2rem] bg-[#050505] border border-white/5 hover:border-blue-500/60 transition-all duration-500 hover:-translate-y-2 shadow-[0_10px_30px_rgba(0,0,0,0.7)] hover:shadow-[0_0_35px_rgba(30,58,138,0.25)] overflow-hidden flex flex-col justify-between text-start"
             >
-              {/* إضاءة تظهر عند التمرير */}
               <div className="absolute top-0 right-0 w-32 h-32 bg-blue-600/10 blur-[50px] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
 
               <div className="relative z-10 flex flex-col gap-6">
@@ -88,7 +72,6 @@ export default function SeoTipsSection() {
           ))}
         </div>
 
-        {/* الخلاصة (Conclusion Box) */}
         <div className="max-w-4xl mx-auto mb-20 p-8 md:p-12 rounded-[2.5rem] bg-gradient-to-r from-[#0a0a0a] via-[#050505] to-[#0a0a0a] border border-blue-500/30 text-center relative overflow-hidden shadow-[0_0_30px_rgba(30,58,138,0.1)]">
           <div className="absolute inset-0 bg-[radial-gradient(#3b82f6_1px,transparent_1px)] [background-size:16px_16px] opacity-[0.02]"></div>
           <h3 className="relative z-10 text-2xl md:text-3xl font-bold text-blue-400 mb-4">
@@ -99,7 +82,6 @@ export default function SeoTipsSection() {
           </p>
         </div>
 
-        {/* قسم Call to Action الختامي */}
         <div className="relative max-w-5xl mx-auto group">
           <div className="absolute -inset-1 bg-gradient-to-r from-blue-600/30 via-blue-500/50 to-indigo-600/30 rounded-[2.5rem] blur opacity-30 group-hover:opacity-60 transition duration-1000"></div>
 
@@ -116,7 +98,7 @@ export default function SeoTipsSection() {
 
             <div className="relative z-10 shrink-0 w-full md:w-auto">
               <Link 
-                href="/contact"
+                href={isEnglish ? "/en/contact" : "/contact"}
                 className="relative inline-flex items-center justify-center w-full md:w-auto px-8 py-5 text-base md:text-lg font-black text-white bg-blue-600 rounded-2xl overflow-hidden shadow-[0_0_25px_rgba(30,58,138,0.6)] hover:shadow-[0_0_50px_rgba(59,130,246,0.9)] hover:scale-105 transition-all duration-300 group/btn border border-blue-500"
               >
                 <span className="absolute w-0 h-0 transition-all duration-500 ease-out bg-white rounded-full group-hover/btn:w-64 group-hover/btn:h-64 opacity-20"></span>

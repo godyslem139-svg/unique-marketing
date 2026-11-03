@@ -1,11 +1,11 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { PortableText } from '@portabletext/react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { urlFor } from '@/sanity/lib/image'
 
-// إعدادات التنسيق المخصصة مع محاذاة ديناميكية تبدأ من البداية (text-start) حسب اللغة
 const portableTextComponents = {
   block: {
     h1: ({ children }: any) => <h1 className="text-3xl md:text-5xl font-black text-white mt-10 mb-6 tracking-tight text-start">{children}</h1>,
@@ -23,31 +23,9 @@ const portableTextComponents = {
 }
 
 export default function DynamicPageClient({ page }: { page: any }) {
-  const [lang, setLang] = useState<'ar' | 'en'>('ar')
-
-  useEffect(() => {
-    const updateLangFromDOM = () => {
-      const currentDir = document.documentElement.dir
-      const currentLangAttr = document.documentElement.lang
-      if (currentDir === 'ltr' || currentLangAttr === 'en') {
-        setLang('en')
-      } else {
-        setLang('ar')
-      }
-    }
-
-    updateLangFromDOM()
-
-    window.addEventListener('languagechange', updateLangFromDOM)
-    
-    const observer = new MutationObserver(updateLangFromDOM)
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['lang', 'dir'] })
-
-    return () => {
-      window.removeEventListener('languagechange', updateLangFromDOM)
-      observer.disconnect()
-    }
-  }, [])
+  const pathname = usePathname()
+  const isEnglish = pathname?.startsWith('/en')
+  const lang = isEnglish ? 'en' : 'ar'
 
   return (
     <main className={`min-h-screen bg-black text-white ${lang === 'ar' ? 'rtl' : 'ltr'}`} dir={lang === 'ar' ? 'rtl' : 'ltr'}>
@@ -343,7 +321,7 @@ export default function DynamicPageClient({ page }: { page: any }) {
                       return (
                         <Link 
                           key={pIdx}
-                          href={`/${pSlug}`}
+                          href={isEnglish ? `/en/${pSlug}` : `/${pSlug}`}
                           className="px-6 py-3 rounded-xl bg-neutral-900 border border-neutral-800 text-white font-semibold hover:border-blue-500 hover:bg-neutral-800 transition shadow-lg"
                         >
                           {pTitle || pSlug}

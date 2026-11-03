@@ -1,26 +1,14 @@
-"use client";
-import { useState, useEffect } from "react";
+'use client'
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import ar from "@/messages/ar.json";
 import en from "@/messages/en.json";
 
 export default function ExpertVsAgencySection() {
-  const [locale, setLocale] = useState<"ar" | "en">("ar");
-
-  useEffect(() => {
-    const checkLang = () => {
-      const currentDir = document.documentElement.dir;
-      setLocale(currentDir === "ltr" ? "en" : "ar");
-    };
-    checkLang();
-    window.addEventListener("languageChanged", checkLang);
-    const observer = new MutationObserver(checkLang);
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["dir"] });
-    return () => {
-      window.removeEventListener("languageChanged", checkLang);
-      observer.disconnect();
-    };
-  }, []);
+  const pathname = usePathname();
+  const isEnglish = pathname?.startsWith("/en");
+  const locale = isEnglish ? "en" : "ar";
 
   const t: any = locale === "ar" ? ar : en;
   const data = t.ExpertVsAgency;
@@ -28,7 +16,7 @@ export default function ExpertVsAgencySection() {
   if (!data) return null;
 
   return (
-    <section key={locale} className="relative w-full bg-[#000000] py-24 px-4 md:px-8 overflow-hidden font-sans">
+    <section className="relative w-full bg-[#000000] py-24 px-4 md:px-8 overflow-hidden font-sans" dir={locale === 'ar' ? 'rtl' : 'ltr'}>
       
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[650px] bg-blue-600/10 blur-[150px] rounded-full pointer-events-none"></div>
 
@@ -107,7 +95,6 @@ export default function ExpertVsAgencySection() {
           </p>
         </div>
 
-        {/* قسم Call to Action الختامي */}
         <div className="relative max-w-5xl mx-auto group">
           <div className="absolute -inset-1 bg-gradient-to-r from-blue-600/30 via-blue-500/50 to-indigo-600/30 rounded-[2.5rem] blur opacity-30 group-hover:opacity-60 transition duration-1000"></div>
 
@@ -124,7 +111,7 @@ export default function ExpertVsAgencySection() {
 
             <div className="relative z-10 shrink-0 w-full md:w-auto">
               <Link 
-                href="/contact"
+                href={isEnglish ? "/en/contact" : "/contact"}
                 className="relative inline-flex items-center justify-center w-full md:w-auto px-8 py-5 text-base md:text-lg font-black text-white bg-blue-600 rounded-2xl overflow-hidden shadow-[0_0_25px_rgba(30,58,138,0.6)] hover:shadow-[0_0_50px_rgba(59,130,246,0.9)] hover:scale-105 transition-all duration-300 group/btn border border-blue-500"
               >
                 <span className="absolute w-0 h-0 transition-all duration-500 ease-out bg-white rounded-full group-hover/btn:w-64 group-hover/btn:h-64 opacity-20"></span>
