@@ -1,7 +1,16 @@
+import type { Metadata } from 'next'
 import { client } from '@/sanity/lib/client'
 import { defineQuery } from 'next-sanity'
 import Link from 'next/link'
 import GeoKeywordsSection from '@/components/GeoKeywordsSection'
+
+export const metadata: Metadata = {
+  title: "المدونة ومقالات الخبراء في تحسين محركات البحث | Unique",
+  description: "تصفح أحدث المقالات والنصائح الاحترافية في مجال السيو (SEO)، تصميم المواقع، والتسويق الرقمي لتطوير نشاطك التجاري.",
+  alternates: {
+    canonical: "https://www.uniquee-ws.com/blog",
+  },
+};
 
 const BLOG_INDEX_QUERY = defineQuery(`
   *[_type == "flexiblePage" && slug.current match "blog*"]{

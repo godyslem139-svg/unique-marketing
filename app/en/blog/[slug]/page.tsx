@@ -5,6 +5,31 @@ import DynamicPageClient from '@/components/DynamicPageClient'
 import GeoKeywordsSection from '@/components/GeoKeywordsSection'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import type { Metadata } from 'next'
+
+type Props = {
+  params: Promise<{ slug: string }>;
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const resolvedParams = await params;
+  const rawSlug = resolvedParams.slug;
+  const fullSlug = rawSlug.startsWith('blog/') ? rawSlug : `blog/${rawSlug}`;
+  const domain = "https://www.uniquee-ws.com";
+
+  const page = await client.fetch(PAGE_QUERY, { slug: fullSlug });
+
+  const title = page?.pageTitle?.en || page?.pageTitle?.ar || 'Detailed Article';
+  const description = page?.description || 'Read insightful articles and expert tips on SEO and digital marketing.';
+
+  return {
+    title: `${title} | Unique Blog`,
+    description: description,
+    alternates: {
+      canonical: `${domain}/en/blog/${rawSlug.replace('blog/', '')}`,
+    },
+  };
+}
 
 const SIDEBAR_POSTS_QUERY = defineQuery(`
   *[_type == "flexiblePage" && slug.current match "blog*"] | order(_createdAt desc)[0...5]{
@@ -14,7 +39,7 @@ const SIDEBAR_POSTS_QUERY = defineQuery(`
   }
 `)
 
-export default async function EnBlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
+export default async function EnBlogPostPage({ params }: Props) {
   const resolvedParams = await params
   const rawSlug = resolvedParams.slug
   const fullSlug = rawSlug.startsWith('blog/') ? rawSlug : `blog/${rawSlug}`

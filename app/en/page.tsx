@@ -1,20 +1,29 @@
+import type { Metadata } from "next";
+import dynamic from 'next/dynamic';
 import HeroSection from "@/components/Hero";
 import AboutSeoSection from "@/components/AboutSeoSection";
 import PortfolioMarquee from "@/components/PortfolioMarquee";
-import SeoStrategiesSection from "@/components/SeoStrategiesSection";
-import WhySeoSection from "@/components/WhySeoSection";
-import HomePricing from "@/components/HomePricing";
-import LiveDashboardSection from "@/components/LiveDashboardSection";
-import HowToChooseSeoSection from "@/components/owToChooseSeoSection";
-import HowWeOptimizeSection from "@/components/HowWeOptimizeSection";
-import SeoBenefitsSection from "@/components/SeoBenefitsSection";
-import CommonMistakesSection from "@/components/CommonMistakesSection";
-import SeoTipsSection from "@/components/SeoTipsSection";
-import ExpertVsAgencySection from "@/components/ExpertVsAgencySection";
-import SeoCostSection from "@/components/SeoCostSection";
-import SeoServicesTableSection from "@/components/SeoServicesTableSection";
-import FaqSection from "@/components/FaqSection";
-import GeoKeywordsSection from "@/components/GeoKeywordsSection";
+export const metadata: Metadata = {
+  title: "SEO Services & Search Engine Optimization Agency | Unique",
+  description: "Specialized SEO agency helping you improve your Google rankings, drive targeted traffic, and acquire new customers.",
+  alternates: {
+    canonical: "https://www.uniquee-ws.com/en",
+  },
+};
+const SeoStrategiesSection = dynamic(() => import("@/components/SeoStrategiesSection"));
+const WhySeoSection = dynamic(() => import("@/components/WhySeoSection"));
+const HomePricing = dynamic(() => import("@/components/HomePricing"));
+const LiveDashboardSection = dynamic(() => import("@/components/LiveDashboardSection"));
+const HowToChooseSeoSection = dynamic(() => import("@/components/owToChooseSeoSection"));
+const HowWeOptimizeSection = dynamic(() => import("@/components/HowWeOptimizeSection"));
+const SeoBenefitsSection = dynamic(() => import("@/components/SeoBenefitsSection"));
+const CommonMistakesSection = dynamic(() => import("@/components/CommonMistakesSection"));
+const SeoTipsSection = dynamic(() => import("@/components/SeoTipsSection"));
+const ExpertVsAgencySection = dynamic(() => import("@/components/ExpertVsAgencySection"));
+const SeoCostSection = dynamic(() => import("@/components/SeoCostSection"));
+const SeoServicesTableSection = dynamic(() => import("@/components/SeoServicesTableSection"));
+const FaqSection = dynamic(() => import("@/components/FaqSection"));
+const GeoKeywordsSection = dynamic(() => import("@/components/GeoKeywordsSection"));
 
 export default function EnHomePage() {
   return (
