@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Cairo } from "next/font/google";
 import "./globals.css";
 import LayoutWrapper from "@/components/LayoutWrapper";
@@ -10,6 +10,12 @@ const cairo = Cairo({
   variable: "--font-cairo",
   adjustFontFallback: true,
 });
+
+export const viewport: Viewport = {
+  themeColor: "#000000",
+  width: "device-width",
+  initialScale: 1,
+};
 
 export const metadata: Metadata = {
   title: "شركة سيو خدمات تحسين محركات البحث SEO | Unique",
@@ -54,7 +60,12 @@ export default function RootLayout({
       className={cairo.variable}
       data-scroll-behavior="smooth"
     >
-      <body className={`bg-[#000000] text-white selection:bg-yellow-400 selection:text-[#000000] ${cairo.className} antialiased overflow-x-hidden`}>
+      <head>
+        {/* الاتصال المسبق الضروري فقط لتسريع جلب الخطوط أو الصور الأساسية وتجنب تحذيرات Lighthouse */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      </head>
+      <body className={`bg-[#000000] text-white selection:bg-blue-600 selection:text-white ${cairo.className} antialiased overflow-x-hidden`}>
         <LayoutWrapper>
           {children}
         </LayoutWrapper>
