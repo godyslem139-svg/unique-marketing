@@ -96,7 +96,7 @@ export default function Footer() {
                 {data.aboutUs}
               </Link>
               <Link href={isEnglish ? "/en/blog" : "/blog"} className="px-6 py-4 rounded-2xl bg-[#050505] border border-white/5 hover:border-blue-500 hover:bg-blue-600/10 text-gray-300 hover:text-white text-center font-medium transition-all shadow-md">
-                {data.services}
+                {data.blog}
               </Link>
               <Link href={isEnglish ? "/en/portfolio" : "/portfolio"} className="px-6 py-4 rounded-2xl bg-[#050505] border border-white/5 hover:border-blue-500 hover:bg-blue-600/10 text-gray-300 hover:text-white text-center font-medium transition-all shadow-md">
                 {data.portfolio}
@@ -113,18 +113,18 @@ export default function Footer() {
               {data.servicesTitle}
             </h4>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="px-6 py-4 rounded-2xl bg-[#050505] border border-white/5 text-gray-300 text-center font-medium shadow-md">
+              <Link href={isEnglish ? "/en/services/seo" : "/services/seo"} className="px-6 py-4 rounded-2xl bg-[#050505] border border-white/5 hover:border-blue-500 hover:bg-blue-600/10 text-gray-300 hover:text-white text-center font-medium transition-all shadow-md block">
                 {data.seoService}
-              </div>
-              <div className="px-6 py-4 rounded-2xl bg-[#050505] border border-white/5 text-gray-300 text-center font-medium shadow-md">
+              </Link>
+              <Link href={isEnglish ? "/en/services/backlinks" : "/services/backlinks"} className="px-6 py-4 rounded-2xl bg-[#050505] border border-white/5 hover:border-blue-500 hover:bg-blue-600/10 text-gray-300 hover:text-white text-center font-medium transition-all shadow-md block">
                 {data.backlinks}
-              </div>
-              <div className="px-6 py-4 rounded-2xl bg-[#050505] border border-white/5 text-gray-300 text-center font-medium shadow-md">
+              </Link>
+              <Link href={isEnglish ? "/en/services/wordpress-nextjs" : "/services/wordpress-nextjs"} className="px-6 py-4 rounded-2xl bg-[#050505] border border-white/5 hover:border-blue-500 hover:bg-blue-600/10 text-gray-300 hover:text-white text-center font-medium transition-all shadow-md block">
                 {data.webDesign}
-              </div>
-              <div className="px-6 py-4 rounded-2xl bg-[#050505] border border-white/5 text-gray-300 text-center font-medium shadow-md">
+              </Link>
+              <Link href={isEnglish ? "/en/services/e-commerce" : "/services/e-commerce"} className="px-6 py-4 rounded-2xl bg-[#050505] border border-white/5 hover:border-blue-500 hover:bg-blue-600/10 text-gray-300 hover:text-white text-center font-medium transition-all shadow-md block">
                 {data.ecommerce}
-              </div>
+              </Link>
             </div>
           </div>
 
