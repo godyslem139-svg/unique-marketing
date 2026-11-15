@@ -16,11 +16,19 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const page = await client.fetch(PAGE_QUERY, { slug: fullSlug });
 
-  const title = page?.pageTitle?.ar || page?.pageTitle?.en || fullSlug;
-  const description = page?.description || 'شركة سيو متخصصة في تحسين محركات البحث.';
+  const isEnglish = fullSlug.startsWith('en');
+
+  // قراءة حقول السيو من داخل كائن seo
+  const title = isEnglish 
+    ? (page?.seo?.metaTitle?.en || page?.pageTitle?.en || fullSlug)
+    : (page?.seo?.metaTitle?.ar || page?.pageTitle?.ar || fullSlug);
+
+  const description = isEnglish
+    ? (page?.seo?.metaDescription?.en || page?.description?.en || '')
+    : (page?.seo?.metaDescription?.ar || page?.description?.ar || 'شركة سيو متخصصة في تحسين محركات البحث.');
 
   return {
-    title: `${title} | Unique`,
+    title: title,
     description: description,
     alternates: {
       canonical: `${domain}/${fullSlug}`,
