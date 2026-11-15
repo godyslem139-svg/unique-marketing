@@ -116,6 +116,12 @@ export default function PortfolioPage() {
       link: 'https://www.raneen.com/ar/',
       category: 'متجر إلكتروني'
     },
+    {
+      title: 'موقع ترافل فريند',
+      image: '/travelfriend.webp',
+      link: 'https://www.travelfriend-ag.com/',
+      category: 'منصة إلكترونية'
+    },
   ];
 
   return (

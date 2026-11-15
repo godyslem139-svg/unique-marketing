@@ -13,7 +13,8 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const resolvedParams = await params;
-  const rawSlug = resolvedParams.slug;
+  // فك تشفير الحروف العربية من الرابط
+  const rawSlug = decodeURIComponent(resolvedParams.slug);
   const fullSlug = rawSlug.startsWith('blog/') ? rawSlug : `blog/${rawSlug}`;
   const domain = "https://www.uniquee-ws.com";
 
@@ -41,7 +42,8 @@ const SIDEBAR_POSTS_QUERY = defineQuery(`
 
 export default async function BlogPostPage({ params }: Props) {
   const resolvedParams = await params
-  const rawSlug = resolvedParams.slug
+  // فك تشفير الحروف العربية من الرابط
+  const rawSlug = decodeURIComponent(resolvedParams.slug)
   const fullSlug = rawSlug.startsWith('blog/') ? rawSlug : `blog/${rawSlug}`
   
   const [page, sidebarPosts] = await Promise.all([

@@ -116,6 +116,12 @@ export default function EnPortfolioPage() {
       link: 'https://www.raneen.com/ar/',
       category: 'E-Commerce'
     },
+    {
+      title: 'Travel Friend Website',
+      image: '/travelfriend.webp',
+      link: 'https://www.travelfriend-ag.com/',
+      category: 'Tourism Website'
+    },
   ];
 
   return (
