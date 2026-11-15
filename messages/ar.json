@@ -9,6 +9,7 @@
     "mainMenu": "القائمة الرئيسية",
     "home": "الرئيسية",
     "portfolio": "البورتوفليو",
+    "media": "الميديا ",
     "projects": "مشاريعنا",
     "blog": "المدونة",
     "about": "من نحن"
@@ -623,6 +624,7 @@
     "aboutUs": "من نحن",
     "blog": "المدونة",
     "portfolio": "أعمالنا",
+    "media": "الميديا",
     "contactUs": "اتصل بنا",
     "seoService": "تحسين محركات البحث (SEO)",
     "backlinks": "بناء الروابط الخلفية (Backlinks)",

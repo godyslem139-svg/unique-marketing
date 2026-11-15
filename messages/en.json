@@ -9,6 +9,7 @@
     "mainMenu": "Main Menu",
     "home": "Home",
     "portfolio": "Portfolio",
+    "media": "media",
     "projects": "Projects",
     "blog": "Blog",
     "about": "About Us"
@@ -629,6 +630,7 @@
     "aboutUs": "About Us",
     "blog": "Blog",
     "portfolio": "Portfolio",
+    "media": "media",
     "contactUs": "Contact Us",
     "seoService": "Search Engine Optimization (SEO)",
     "backlinks": "Backlinks Building",

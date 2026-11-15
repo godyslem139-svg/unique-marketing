@@ -217,6 +217,10 @@ export default function Navbar() {
                     {t.Navbar.portfolio}
                   </Link>
                 </li>
+                <Link href={getLocalizedPath("/media")} title={t.Navbar.media} onClick={() => setIsMenuOpen(false)} className="flex items-center gap-3 text-gray-200 hover:text-blue-400 transition py-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
+                    {t.Navbar.media}
+                  </Link>
                 <li>
                   <Link href={getLocalizedPath("/pricing")} title={locale === "ar" ? "الباقات" : "Pricing"} onClick={() => setIsMenuOpen(false)} className="flex items-center gap-3 text-gray-200 hover:text-blue-400 transition py-1">
                     <span className="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
@@ -242,6 +246,7 @@ export default function Navbar() {
                   </Link>
                 </li>
               </ul>
+              
               
               {/* أيقونات السوشيال ميديا - الموبايل */}
               <div className="mt-8 flex flex-wrap lg:hidden items-center gap-3">

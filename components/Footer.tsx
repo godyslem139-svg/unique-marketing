@@ -109,6 +109,9 @@ export default function Footer() {
               <Link href={isEnglish ? "/en/portfolio" : "/portfolio"} className="px-6 py-4 rounded-2xl bg-[#050505] border border-white/5 hover:border-blue-500 hover:bg-blue-600/10 text-gray-300 hover:text-white text-center font-medium transition-all shadow-md">
                 {data.portfolio}
               </Link>
+              <Link href={isEnglish ? "/en/media" : "/media"} className="px-6 py-4 rounded-2xl bg-[#050505] border border-white/5 hover:border-blue-500 hover:bg-blue-600/10 text-gray-300 hover:text-white text-center font-medium transition-all shadow-md">
+                {data.media}
+              </Link>
               <Link href={isEnglish ? "/en/contact" : "/contact"} className="px-6 py-4 rounded-2xl bg-[#050505] border border-white/5 hover:border-blue-500 hover:bg-blue-600/10 text-gray-300 hover:text-white text-center font-medium transition-all shadow-md">
                 {data.contactUs}
               </Link>
