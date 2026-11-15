@@ -1,5 +1,98 @@
 import { type SchemaTypeDefinition } from 'sanity'
 
+// 1. تعريف عناصر المحرر المتقدمة (النصوص + الجداول + الأكواد البرمجية داخل المقال)
+const richTextElements = [
+  { type: 'block' },
+  {
+    type: 'object',
+    name: 'codeBlock',
+    title: '💻 كود برمجي للعرض (Code Block)',
+    fields: [
+      {
+        name: 'language',
+        title: 'لغة الكود (Language)',
+        type: 'string',
+        options: {
+          list: [
+            { title: 'CSS', value: 'css' },
+            { title: 'HTML', value: 'html' },
+            { title: 'JavaScript / TypeScript', value: 'javascript' },
+            { title: 'JSON', value: 'json' },
+          ]
+        },
+        initialValue: 'css'
+      },
+      {
+        name: 'code',
+        title: 'اكتب أو الصق الكود هنا',
+        type: 'text',
+        rows: 8
+      }
+    ],
+    preview: {
+      select: { title: 'language', subtitle: 'code' },
+      prepare({ title, subtitle }: { title?: string; subtitle?: string }) {
+        return {
+          title: `💻 Code (${title?.toUpperCase() || 'CODE'})`,
+          subtitle: subtitle || ''
+        }
+      }
+    }
+  },
+  {
+    type: 'object',
+    name: 'customTable',
+    title: '📊 جدول (Table)',
+    fields: [
+      {
+        name: 'headers',
+        title: 'عناوين الأعمدة (Table Headers)',
+        type: 'array',
+        of: [{ type: 'string' }],
+        description: 'أضف عناوين الأعمدة بالترتيب (اضغط Add item لكل عمود)'
+      },
+      {
+        name: 'rows',
+        title: 'صفوف الجدول (Table Rows)',
+        type: 'array',
+        of: [
+          {
+            type: 'object',
+            name: 'row',
+            title: 'صف (Row)',
+            fields: [
+              {
+                name: 'cells',
+                title: 'خلايا الصف (Cells)',
+                type: 'array',
+                of: [{ type: 'string' }],
+                description: 'أضف محتوى كل خلية بنفس ترتيب الأعمدة'
+              }
+            ],
+            preview: {
+              select: { cells: 'cells' },
+              prepare({ cells }: { cells?: string[] }) {
+                return {
+                  title: cells && cells.length > 0 ? cells.join(' | ') : 'صف فارغ'
+                }
+              }
+            }
+          }
+        ]
+      }
+    ],
+    preview: {
+      select: { headers: 'headers' },
+      prepare({ headers }: { headers?: string[] }) {
+        return {
+          title: '📊 جدول بيانات (Table)',
+          subtitle: headers && headers.length > 0 ? headers.join(' | ') : 'بدون عناوين'
+        }
+      }
+    }
+  }
+];
+
 // دالة مساعدة لإنشاء حقول اللغات (عربي وإنجليزي)
 const createMultiLangField = (name: string, title: string, isArray: boolean = false) => ({
   name,
@@ -10,13 +103,13 @@ const createMultiLangField = (name: string, title: string, isArray: boolean = fa
       name: 'ar',
       title: 'العربية (AR)',
       type: isArray ? 'array' : 'string',
-      ...(isArray ? { of: [{ type: 'block' }] } : {})
+      ...(isArray ? { of: richTextElements } : {})
     },
     {
       name: 'en',
       title: 'English (EN)',
       type: isArray ? 'array' : 'string',
-      ...(isArray ? { of: [{ type: 'block' }] } : {})
+      ...(isArray ? { of: richTextElements } : {})
     }
   ]
 });
@@ -27,8 +120,8 @@ const createCtaFields = () => ([
   createMultiLangField('ctaUrl', 'رابط زر الانتقال (URL)')
 ]);
 
-// 1. سكيما الصفحات المرنة (Page Builder الشاملة بكل الأقسام)
-const flexiblePage = {
+// سكيما الصفحات المرنة (Page Builder الشاملة بكل الأقسام)
+export const flexiblePage: SchemaTypeDefinition = {
   name: 'flexiblePage',
   title: 'Flexible Pages (الصفحات المرنة)',
   type: 'document',
@@ -48,7 +141,45 @@ const flexiblePage = {
       title: 'أقسام الصفحة (Page Builder Sections)',
       type: 'array',
       of: [
-        // 1. سكشن الهيرو
+        // 1. سكشن كود HTML كامل أو مخصص (عربي وإنجليزي)
+        {
+          type: 'object',
+          name: 'rawHtmlSection',
+          title: '💻 Custom HTML Section (بناء الصفحة أو القسم بكود HTML حر للغتين)',
+          fields: [
+            {
+              name: 'sectionNote',
+              title: 'اسم توضيحي للقسم (لك أنت في لوحة التحكم فقط)',
+              type: 'string',
+              initialValue: 'كود HTML مخصص'
+            },
+            {
+              name: 'htmlAr',
+              title: 'كود HTML للنسخة العربية (AR)',
+              type: 'text',
+              rows: 15,
+              description: 'ضع كود HTML الكامل هنا (يدعم الجداول، التنسيقات، وأوسمة <style>) ليظهر في الصفحة العربية.'
+            },
+            {
+              name: 'htmlEn',
+              title: 'كود HTML للنسخة الإنجليزية (EN)',
+              type: 'text',
+              rows: 15,
+              description: 'ضع كود HTML للنسخة الإنجليزية هنا ليظهر في رابط /en/.'
+            }
+          ],
+          preview: {
+            select: { title: 'sectionNote' },
+            prepare({ title }: { title?: string }) {
+              return {
+                title: `💻 ${title || 'Custom HTML Section'}`,
+                subtitle: 'كود HTML مباشر (عربي / إنجليزي)'
+              }
+            }
+          }
+        },
+
+        // 2. سكشن الهيرو
         {
           type: 'object',
           name: 'heroSection',
@@ -64,7 +195,7 @@ const flexiblePage = {
           ]
         },
 
-        // 2. سكشن قسمين (Split Section)
+        // 3. سكشن قسمين (Split Section)
         {
           type: 'object',
           name: 'splitSection',
@@ -123,7 +254,7 @@ const flexiblePage = {
           ]
         },
 
-        // 3. سكشن السلايدر المتحرك (Moving Slider / Marquee)
+        // 4. سكشن السلايدر المتحرك (Moving Slider / Marquee)
         {
           type: 'object',
           name: 'sliderSection',
@@ -148,7 +279,7 @@ const flexiblePage = {
           ]
         },
 
-        // 4. سكشن شبكة الكروت (Grid Cards)
+        // 5. سكشن شبكة الكروت (Grid Cards)
         {
           type: 'object',
           name: 'gridCardsSection',
@@ -168,8 +299,6 @@ const flexiblePage = {
                     createMultiLangField('cardDesc', 'وصف الكارت', true),
                     { name: 'cardImage', title: 'صورة الكارت', type: 'image', options: { hotspot: true } },
                     { name: 'priceText', title: 'نص السعر على الكارت', type: 'string' },
-                    createMultiLangField('locationText', 'نص الموقع على الخريطة'),
-                    { name: 'locationMapUrl', title: 'رابط خريطة الموقع', type: 'url' },
                     createMultiLangField('badgeText', 'نص الشارة المميزة على الكارت'),
                     {
                       name: 'badgeEmoji',
@@ -178,15 +307,9 @@ const flexiblePage = {
                       options: {
                         list: [
                           { title: '🔥 الأكثر طلباً', value: '🔥' },
-                          { title: '👨‍👩‍👧‍👦 مناسب للعائلات', value: '👨‍👩‍👧‍👦' },
-                          { title: '👶 مناسب للمبتدئين', value: '👶' },
-                          { title: '🏆 مستوى محترف', value: '🏆' },
-                          { title: '🤿 معدات غوص', value: '🤿' },
-                          { title: '🚤 رحلة بحرية', value: '🚤' },
-                          { title: '🐬 مشاهدة دلافين', value: '🐬' },
+                          { title: '🏆 مستوى احترافي', value: '🏆' },
                           { title: '⭐ خدمة VIP', value: '⭐' },
-                          { title: '🍽️ بوفيه مفتوح', value: '🍽️' },
-                          { title: '🚐 انتقالات مجانية', value: '🚐' }
+                          { title: '🚀 سريع ومميز', value: '🚀' }
                         ],
                         layout: 'dropdown'
                       }
@@ -202,19 +325,63 @@ const flexiblePage = {
           ]
         },
 
-        // 5. سكشن نموذج الحجز والاستعلام
+        // 6. سكشن جدول مقارنة مستقل (Table Section)
         {
           type: 'object',
-          name: 'bookingFormSection',
-          title: 'Booking Inquiry Form (نموذج الحجز والاستعلام)',
+          name: 'tableSection',
+          title: '📊 Table Section (قسم جدول بيانات أو مقارنة)',
           fields: [
-            createMultiLangField('formTitle', 'عنوان نموذج الحجز'),
-            { name: 'defaultAdultPrice', title: 'سعر البالغ الافتراضي (€)', type: 'number', initialValue: 150 },
-            { name: 'defaultChildPrice', title: 'سعر الطفل الافتراضي (€)', type: 'number', initialValue: 150 }
+            createMultiLangField('sectionTitle', 'عنوان الجدول (اختياري)'),
+            {
+              name: 'headersAr',
+              title: 'عناوين الأعمدة (عربي)',
+              type: 'array',
+              of: [{ type: 'string' }]
+            },
+            {
+              name: 'headersEn',
+              title: 'عناوين الأعمدة (English)',
+              type: 'array',
+              of: [{ type: 'string' }]
+            },
+            {
+              name: 'rows',
+              title: 'صفوف الجدول',
+              type: 'array',
+              of: [
+                {
+                  type: 'object',
+                  name: 'tableRow',
+                  title: 'صف',
+                  fields: [
+                    {
+                      name: 'cellsAr',
+                      title: 'خلايا الصف (عربي)',
+                      type: 'array',
+                      of: [{ type: 'string' }]
+                    },
+                    {
+                      name: 'cellsEn',
+                      title: 'خلايا الصف (English)',
+                      type: 'array',
+                      of: [{ type: 'string' }]
+                    }
+                  ],
+                  preview: {
+                    select: { cells: 'cellsAr' },
+                    prepare({ cells }: { cells?: string[] }) {
+                      return {
+                        title: cells && cells.length > 0 ? cells.join(' | ') : 'صف فارغ'
+                      }
+                    }
+                  }
+                }
+              ]
+            }
           ]
         },
 
-        // 6. سكشن الروابط الداخلية
+        // 7. سكشن الروابط الداخلية
         {
           type: 'object',
           name: 'internalLinksSection',
