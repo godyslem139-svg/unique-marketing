@@ -4,6 +4,10 @@ import { defineQuery } from 'next-sanity'
 import Link from 'next/link'
 import GeoKeywordsSection from '@/components/GeoKeywordsSection'
 
+// 1. إجبار Next.js على تحديث الصفحة وقتياً وعدم تخزينها كصفحة قديمة
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
 export const metadata: Metadata = {
   title: "المدونة ومقالات الخبراء في تحسين محركات البحث | Unique",
   description: "تصفح أحدث المقالات والنصائح الاحترافية في مجال السيو (SEO)، تصميم المواقع، والتسويق الرقمي لتطوير نشاطك التجاري.",
@@ -12,10 +16,12 @@ export const metadata: Metadata = {
   },
 };
 
+// 2. إضافة الترتيب التنازلي (order(_createdAt desc)) ليظهر المقال الجديد في أول القائمة
 const BLOG_INDEX_QUERY = defineQuery(`
-  *[_type == "flexiblePage" && slug.current match "blog*"]{
+  *[_type == "flexiblePage" && slug.current match "blog*"] | order(_createdAt desc){
     pageTitle,
     slug,
+    _createdAt,
     sections[_type == "heroSection"][0]{
       "bgImageUrl": bgImage.asset->url,
       "bgVideoFileUrl": bgVideoFile.asset->url,
@@ -25,7 +31,11 @@ const BLOG_INDEX_QUERY = defineQuery(`
 `)
 
 export default async function BlogIndexPage() {
-  const posts = await client.fetch(BLOG_INDEX_QUERY).catch(() => [])
+  // 3. تعطيل الـ CDN والـ Cache أثناء الجلب لقراءة البيانات الحية من Sanity فوراً
+  const posts = await client
+    .withConfig({ useCdn: false })
+    .fetch(BLOG_INDEX_QUERY, {}, { cache: 'no-store' })
+    .catch(() => [])
 
   return (
     <main className="min-h-screen bg-black text-white rtl" dir="rtl">
@@ -33,7 +43,7 @@ export default async function BlogIndexPage() {
         <h1 className="text-4xl md:text-5xl font-extrabold mb-12 text-center tracking-tight">
           المدونة ومقالات الخبراء
         </h1>
-        
+
         {posts && posts.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-24">
             {posts.map((post: any, idx: number) => {
