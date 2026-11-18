@@ -28,7 +28,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     });
 
     // 2. النسخة الإنجليزية (مسبوقة بـ /en)
-    // مع التعامل مع المسار الرئيسي (root) بشكل صحيح لتجنب التكرار مثل //en
     const enPath = path === '' ? '/en' : `/en${path}`;
     sitemapEntries.push({
       url: `${baseUrl}${enPath}`,
@@ -52,6 +51,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     addLocalizedEntries(page.url, page.priority, page.changeFrequency);
   });
 
+  // 2. صفحات السيو وتصميم المواقع الجغرافية (للغتين)
   const geoSlugs = [
     'SEOCompanySaudiArabia',
     'seocompanyjeddah',
@@ -79,6 +79,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     addLocalizedEntries(`/${slug}`, 0.8, 'weekly');
   });
 
+  // 3. صفحة الخدمات والخدمات الفرعية التخصصية (للغتين)
   const serviceSlugs = [
     'services/seo',
     'services/backlinks',
@@ -92,23 +93,32 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     addLocalizedEntries(`/${service}`, 0.8, 'weekly');
   });
 
+  // 4. سحب المقالات من Sanity أوتوماتيكياً (متوافق مع الهياكل المختلفة للـ slug باللغتين)
   try {
-    const posts = await client.fetch(`*[_type == "post"] { "slug": slug.current, _updatedAt }`);
+    const posts = await client.fetch(`*[_type == "post"] { 
+      "slugAr": coalesce(slug.ar.current, slug.current, slug),
+      "slugEn": coalesce(slug.en.current, slug.current, slug),
+      _updatedAt 
+    }`);
     
     if (posts && Array.isArray(posts)) {
-      posts.forEach((post: { slug: string; _updatedAt: string }) => {
-        if (post.slug) {
-          const lastModDate = new Date(post._updatedAt || Date.now());
+      posts.forEach((post: { slugAr?: string; slugEn?: string; _updatedAt: string }) => {
+        const lastModDate = new Date(post._updatedAt || Date.now());
 
+        // المقال باللغة العربية
+        if (post.slugAr) {
           sitemapEntries.push({
-            url: `${baseUrl}/blog/${post.slug}`,
+            url: `${baseUrl}/blog/${post.slugAr}`,
             lastModified: lastModDate,
             changeFrequency: 'weekly',
             priority: 0.6,
           });
+        }
 
+        // المقال باللغة الإنجليزية
+        if (post.slugEn) {
           sitemapEntries.push({
-            url: `${baseUrl}/en/blog/${post.slug}`,
+            url: `${baseUrl}/en/blog/${post.slugEn}`,
             lastModified: lastModDate,
             changeFrequency: 'weekly',
             priority: 0.6,
