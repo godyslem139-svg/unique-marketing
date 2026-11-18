@@ -1,7 +1,6 @@
 import { MetadataRoute } from 'next';
 import { createClient } from '@sanity/client';
 
-// إعداد عميل سانتي لجلب المقالات أوتوماتيكياً
 const client = createClient({
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || 'ff1dwnu5',
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
@@ -13,13 +12,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://www.uniquee-ws.com';
   const sitemapEntries: MetadataRoute.Sitemap = [];
 
-  // دالة مساعدة لإضافة الروابط باللغتين (العربية والإنجليزية)
   const addLocalizedEntries = (
     path: string, 
     priority: number, 
     changeFrequency: 'daily' | 'weekly' | 'monthly'
   ) => {
-    // 1. النسخة العربية (بدون بادئة)
     sitemapEntries.push({
       url: `${baseUrl}${path}`,
       lastModified: new Date(),
@@ -27,7 +24,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority,
     });
 
-    // 2. النسخة الإنجليزية (مسبوقة بـ /en)
     const enPath = path === '' ? '/en' : `/en${path}`;
     sitemapEntries.push({
       url: `${baseUrl}${enPath}`,
@@ -37,7 +33,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     });
   };
 
-  // 1. الصفحات الرئيسية الثابتة (للغتين)
+  // 1. الصفحات الرئيسية الثابتة
   const staticPages = [
     { url: '', priority: 1.0, changeFrequency: 'daily' as const },
     { url: '/contact', priority: 0.8, changeFrequency: 'monthly' as const },
@@ -51,27 +47,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     addLocalizedEntries(page.url, page.priority, page.changeFrequency);
   });
 
-  // 2. صفحات السيو وتصميم المواقع الجغرافية (للغتين)
+  // 2. صفحات السيو الجغرافية
   const geoSlugs = [
-    'SEOCompanySaudiArabia',
-    'seocompanyjeddah',
-    'SEOcompanyinRiyadh',
-    'SEOCompanyUAE',
-    'SEOCompanySharjah',
-    'SEOCompanyDubai',
-    'SEOCompanyKuwait',
-    'SEOCompanyEgypt',
-    'SEOCompanyAlexandria',
-    'SEOCompanyCairo',
-    'WebsiteDesignCompanySaudiArabia',
-    'WebsiteDesignCompanyRiyadh',
-    'WebsiteDesignCompanyJeddah',
-    'WebsiteDesignCompanyKuwait',
-    'WebsiteDesignCompanyUAE',
-    'WebsiteDesignCompanySharjah',
-    'WebsiteDesignCompanyDubai',
-    'WebsiteDesignCompanyEgypt',
-    'WebsiteDesignCompanyAlexandria',
+    'SEOCompanySaudiArabia', 'seocompanyjeddah', 'SEOcompanyinRiyadh',
+    'SEOCompanyUAE', 'SEOCompanySharjah', 'SEOCompanyDubai',
+    'SEOCompanyKuwait', 'SEOCompanyEgypt', 'SEOCompanyAlexandria',
+    'SEOCompanyCairo', 'WebsiteDesignCompanySaudiArabia',
+    'WebsiteDesignCompanyRiyadh', 'WebsiteDesignCompanyJeddah',
+    'WebsiteDesignCompanyKuwait', 'WebsiteDesignCompanyUAE',
+    'WebsiteDesignCompanySharjah', 'WebsiteDesignCompanyDubai',
+    'WebsiteDesignCompanyEgypt', 'WebsiteDesignCompanyAlexandria',
     'WebsiteDesignCompanyCairo',
   ];
 
@@ -79,55 +64,55 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     addLocalizedEntries(`/${slug}`, 0.8, 'weekly');
   });
 
-  // 3. صفحة الخدمات والخدمات الفرعية التخصصية (للغتين)
+  // 3. صفحة الخدمات
   const serviceSlugs = [
-    'services/seo',
-    'services/backlinks',
-    'services/wordpress-nextjs',
-    'services/e-commerce',
-    'services/android',
-    'services/content-writing',
+    'services/seo', 'services/backlinks', 'services/wordpress-nextjs',
+    'services/e-commerce', 'services/android', 'services/content-writing',
   ];
 
   serviceSlugs.forEach((service) => {
     addLocalizedEntries(`/${service}`, 0.8, 'weekly');
   });
 
-  // 4. سحب المقالات من Sanity أوتوماتيكياً (متوافق مع الهياكل المختلفة للـ slug باللغتين)
+  // 4. سحب المقالات بناءً على هيكل ملف المدونة الخاص بك (flexiblePage + blog/)
   try {
-    const posts = await client.fetch(`*[_type == "post"] { 
-      "slugAr": coalesce(slug.ar.current, slug.current, slug),
-      "slugEn": coalesce(slug.en.current, slug.current, slug),
-      _updatedAt 
+    const posts = await client.fetch(`*[_type == "flexiblePage" && slug.current match "blog*"] { 
+      "currentSlug": slug.current,
+      _updatedAt
     }`);
     
     if (posts && Array.isArray(posts)) {
-      posts.forEach((post: { slugAr?: string; slugEn?: string; _updatedAt: string }) => {
-        const lastModDate = new Date(post._updatedAt || Date.now());
+      posts.forEach((post: { currentSlug?: string; _updatedAt: string }) => {
+        if (post.currentSlug) {
+          // استخراج الـ slug النظيف (إزالة كلمة blog/ إذا كانت موجودة لتجنب التكرار)
+          const rawSlug = post.currentSlug.startsWith('blog/') 
+            ? post.currentSlug.replace('blog/', '') 
+            : post.currentSlug;
 
-        // المقال باللغة العربية
-        if (post.slugAr) {
-          sitemapEntries.push({
-            url: `${baseUrl}/blog/${post.slugAr}`,
-            lastModified: lastModDate,
-            changeFrequency: 'weekly',
-            priority: 0.6,
-          });
-        }
+          if (rawSlug) {
+            const lastModDate = new Date(post._updatedAt || Date.now());
 
-        // المقال باللغة الإنجليزية
-        if (post.slugEn) {
-          sitemapEntries.push({
-            url: `${baseUrl}/en/blog/${post.slugEn}`,
-            lastModified: lastModDate,
-            changeFrequency: 'weekly',
-            priority: 0.6,
-          });
+            // المقال باللغة العربية
+            sitemapEntries.push({
+              url: `${baseUrl}/blog/${rawSlug}`,
+              lastModified: lastModDate,
+              changeFrequency: 'weekly',
+              priority: 0.6,
+            });
+
+            // المقال باللغة الإنجليزية
+            sitemapEntries.push({
+              url: `${baseUrl}/en/blog/${rawSlug}`,
+              lastModified: lastModDate,
+              changeFrequency: 'weekly',
+              priority: 0.6,
+            });
+          }
         }
       });
     }
   } catch (error) {
-    console.error('Error fetching blog posts from Sanity for sitemap:', error);
+    console.error('Error fetching blog posts for sitemap:', error);
   }
 
   return sitemapEntries;
