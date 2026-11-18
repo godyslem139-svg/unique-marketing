@@ -11,10 +11,34 @@ const client = createClient({
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://www.uniquee-ws.com';
-
   const sitemapEntries: MetadataRoute.Sitemap = [];
 
-  // 1. الصفحات الرئيسية الثابتة
+  // دالة مساعدة لإضافة الروابط باللغتين (العربية والإنجليزية)
+  const addLocalizedEntries = (
+    path: string, 
+    priority: number, 
+    changeFrequency: 'daily' | 'weekly' | 'monthly'
+  ) => {
+    // 1. النسخة العربية (بدون بادئة)
+    sitemapEntries.push({
+      url: `${baseUrl}${path}`,
+      lastModified: new Date(),
+      changeFrequency,
+      priority,
+    });
+
+    // 2. النسخة الإنجليزية (مسبوقة بـ /en)
+    // مع التعامل مع المسار الرئيسي (root) بشكل صحيح لتجنب التكرار مثل //en
+    const enPath = path === '' ? '/en' : `/en${path}`;
+    sitemapEntries.push({
+      url: `${baseUrl}${enPath}`,
+      lastModified: new Date(),
+      changeFrequency,
+      priority,
+    });
+  };
+
+  // 1. الصفحات الرئيسية الثابتة (للغتين)
   const staticPages = [
     { url: '', priority: 1.0, changeFrequency: 'daily' as const },
     { url: '/contact', priority: 0.8, changeFrequency: 'monthly' as const },
@@ -25,15 +49,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ];
 
   staticPages.forEach((page) => {
-    sitemapEntries.push({
-      url: `${baseUrl}${page.url}`,
-      lastModified: new Date(),
-      changeFrequency: page.changeFrequency,
-      priority: page.priority,
-    });
+    addLocalizedEntries(page.url, page.priority, page.changeFrequency);
   });
 
-  // 2. صفحات السيو وتصميم المواقع الجغرافية (التي حددتها بدقة)
   const geoSlugs = [
     'SEOCompanySaudiArabia',
     'seocompanyjeddah',
@@ -58,15 +76,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ];
 
   geoSlugs.forEach((slug) => {
-    sitemapEntries.push({
-      url: `${baseUrl}/${slug}`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    });
+    addLocalizedEntries(`/${slug}`, 0.8, 'weekly');
   });
 
-  // 3. صفحة الخدمات والخدمات الفرعية التخصصية
   const serviceSlugs = [
     'services/seo',
     'services/backlinks',
@@ -77,24 +89,27 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ];
 
   serviceSlugs.forEach((service) => {
-    sitemapEntries.push({
-      url: `${baseUrl}/${service}`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    });
+    addLocalizedEntries(`/${service}`, 0.8, 'weekly');
   });
 
-  // 4. سحب المقالات الجديدة من Sanity أوتوماتيكياً وللأبد
   try {
     const posts = await client.fetch(`*[_type == "post"] { "slug": slug.current, _updatedAt }`);
     
     if (posts && Array.isArray(posts)) {
       posts.forEach((post: { slug: string; _updatedAt: string }) => {
         if (post.slug) {
+          const lastModDate = new Date(post._updatedAt || Date.now());
+
           sitemapEntries.push({
             url: `${baseUrl}/blog/${post.slug}`,
-            lastModified: new Date(post._updatedAt || Date.now()),
+            lastModified: lastModDate,
+            changeFrequency: 'weekly',
+            priority: 0.6,
+          });
+
+          sitemapEntries.push({
+            url: `${baseUrl}/en/blog/${post.slug}`,
+            lastModified: lastModDate,
             changeFrequency: 'weekly',
             priority: 0.6,
           });
