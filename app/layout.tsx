@@ -3,6 +3,7 @@ import { Cairo } from "next/font/google";
 import "./globals.css";
 import LayoutWrapper from "@/components/LayoutWrapper";
 import FloatingWhatsApp from "@/components/FloatingWhatsApp";
+import WebMcpProvider from "@/components/WebMcpProvider";
 
 const cairo = Cairo({
   subsets: ["arabic"],
@@ -146,6 +147,10 @@ export default function RootLayout({
       data-scroll-behavior="smooth"
     >
       <head>
+        <meta
+          httpEquiv="origin-trial"
+          content="ArQ30sxfeQUSPZf96NU60KdINgAegiqDY0sVswkt8+i7Z6jRrkMqnMDm7+oybEQksgAtmqpffufLx/bpZOHGPQQAAABleyJvcmlnaW4iOiJodHRwczovL3d3dy51bmlxdWVlLXdzLmNvbTo0NDMiLCJmZWF0dXJlIjoiV2ViTUNQIiwiZXhwaXJ5IjoxODA2MzY0ODAwLCJpc1N1YmRvbWFpbiI6dHJ1ZX0="
+        />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"
@@ -162,6 +167,7 @@ export default function RootLayout({
       >
         <LayoutWrapper>{children}</LayoutWrapper>
         <FloatingWhatsApp />
+        <WebMcpProvider />
       </body>
     </html>
   );
