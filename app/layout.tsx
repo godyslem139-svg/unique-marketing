@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Cairo } from "next/font/google";
 import "./globals.css";
 import LayoutWrapper from "@/components/LayoutWrapper";
+import FloatingWhatsApp from "@/components/FloatingWhatsApp";
 
 const cairo = Cairo({
   subsets: ["arabic"],
@@ -64,6 +65,15 @@ export const metadata: Metadata = {
   },
 };
 
+const sharedAddress = {
+  "@type": "PostalAddress",
+  streetAddress: "Nasr City",
+  addressLocality: "Cairo",
+  addressRegion: "Cairo",
+  postalCode: "11765",
+  addressCountry: "EG",
+};
+
 const globalSchema = {
   "@context": "https://schema.org",
   "@graph": [
@@ -73,12 +83,14 @@ const globalSchema = {
       name: "UNIQUE Digital Agency",
       alternateName: "Unique",
       url: DOMAIN,
+      image: `${DOMAIN}/logo.png`,
       logo: {
         "@type": "ImageObject",
-        url: `${DOMAIN}/logo.png`, // تأكد إن اسم ملف اللوجو في مجلد public مطابق
+        url: `${DOMAIN}/logo.png`,
       },
       email: "godyslem139@gmail.com",
       telephone: "+201270506511",
+      address: sharedAddress,
       contactPoint: {
         "@type": "ContactPoint",
         telephone: "+201270506511",
@@ -100,6 +112,7 @@ const globalSchema = {
       "@id": `${DOMAIN}/#service`,
       name: "UNIQUE Digital Agency",
       url: DOMAIN,
+      image: `${DOMAIN}/logo.png`,
       telephone: "+201270506511",
       email: "godyslem139@gmail.com",
       priceRange: "$$",
@@ -109,11 +122,7 @@ const globalSchema = {
         { "@type": "Country", name: "United Arab Emirates" },
         { "@type": "Country", name: "Kuwait" },
       ],
-      address: {
-        "@type": "PostalAddress",
-        addressCountry: "EG",
-        addressLocality: "Cairo",
-      },
+      address: sharedAddress,
       geo: {
         "@type": "GeoCoordinates",
         latitude: 30.0444,
@@ -152,6 +161,7 @@ export default function RootLayout({
         className={`bg-[#000000] text-white selection:bg-blue-600 selection:text-white ${cairo.className} antialiased overflow-x-hidden`}
       >
         <LayoutWrapper>{children}</LayoutWrapper>
+        <FloatingWhatsApp />
       </body>
     </html>
   );
