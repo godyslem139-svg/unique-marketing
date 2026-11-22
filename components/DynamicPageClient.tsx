@@ -98,16 +98,13 @@ export default function DynamicPageClient({ page }: { page: any }) {
         {page.sections?.map((section: any, index: number) => {
           switch (section._type) {
             
-            // 1. قسم كود HTML الحر (مع فلترة الاستايلات الخارجية وتوحيدها مع Dark Mode الموقع)
             case 'rawHtmlSection': {
               const hasEn = Boolean(section.htmlEn?.trim())
               const htmlContent = isEnglish ? (hasEn ? section.htmlEn : section.htmlAr) : (section.htmlAr || section.htmlEn)
-              // إذا كنا في الصفحة الإنجليزية ولم يضع المستخدم كود إنجليزي بعد، نعرض الكود العربي باتجاه RTL حتى لا يتشقلب
               const contentDir = isEnglish && !hasEn ? 'rtl' : (lang === 'ar' ? 'rtl' : 'ltr')
 
               if (!htmlContent) return null
 
-              // إزالة أي وسوم <style> خارجية داخل الـ HTML تسبب تدمير ألوان الموقع أو القائمة الجانبية
               const cleanHtml = htmlContent.replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '')
 
               return (
@@ -117,7 +114,6 @@ export default function DynamicPageClient({ page }: { page: any }) {
                     dangerouslySetInnerHTML={{ __html: cleanHtml }}
                   />
                   <style jsx global>{`
-                    /* توحيد تصميم مقالات الـ HTML مع الهوية البصرية السوداء للموقع */
                     .unique-dark-article,
                     .unique-dark-article section,
                     .unique-dark-article article,
@@ -178,7 +174,6 @@ export default function DynamicPageClient({ page }: { page: any }) {
                       color: #93c5fd !important;
                       text-decoration: underline;
                     }
-                    /* تنسيق الجداول الاحترافي في الوضع الليلي */
                     .unique-dark-article table {
                       width: 100%;
                       border-collapse: collapse;
@@ -214,7 +209,6 @@ export default function DynamicPageClient({ page }: { page: any }) {
                     .unique-dark-article tr:hover td {
                       background-color: #171717 !important;
                     }
-                    /* تنسيق صناديق الأكواد البرمجية من اليسار لليمين */
                     .unique-dark-article pre {
                       direction: ltr !important;
                       text-align: left !important;

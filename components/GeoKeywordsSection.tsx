@@ -18,13 +18,11 @@ export default function GeoKeywordsSection() {
   return (
     <section className="relative w-full bg-[#000000] py-24 px-4 md:px-8 overflow-hidden font-sans" dir={locale === 'ar' ? 'rtl' : 'ltr'}>
       
-      {/* خلفية بتوهج كحلي فخم */}
       <div className="absolute inset-0 bg-blue-600/5 pointer-events-none"></div>
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-blue-600/10 blur-[150px] rounded-full pointer-events-none"></div>
 
       <div className="relative z-10 max-w-7xl mx-auto">
         
-        {/* مقدمة القسم */}
         <div className="max-w-4xl mx-auto text-center mb-16">
           <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-black border border-blue-500/50 text-blue-400 text-sm font-bold mb-6 shadow-[0_0_20px_rgba(30,58,138,0.4)]">
             <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>

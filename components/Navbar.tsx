@@ -70,7 +70,6 @@ export default function Navbar() {
             )}
           </button>
 
-          {/* أيقونات السوشيال ميديا - الديسكتوب */}
           <div className="hidden lg:flex items-center gap-2 px-2 border-x border-blue-500/20">
             <a href="https://www.facebook.com/uniquews?locale=ar_AR" target="_blank" rel="noopener noreferrer" title="Facebook - Unique Agency" 
                className="w-9 h-9 rounded-full bg-black border border-blue-500/50 flex items-center justify-center text-blue-400 hover:bg-blue-600 hover:text-white hover:scale-110 transition-all duration-300 shadow-[0_0_10px_rgba(30,58,138,0.3)] hover:shadow-[0_0_20px_rgba(59,130,246,0.6)]">
@@ -248,7 +247,6 @@ export default function Navbar() {
               </ul>
               
               
-              {/* أيقونات السوشيال ميديا - الموبايل */}
               <div className="mt-8 flex flex-wrap lg:hidden items-center gap-3">
                 <a href="https://www.facebook.com/uniquews?locale=ar_AR" target="_blank" rel="noopener noreferrer" title="Facebook - Unique Agency" className="w-10 h-10 rounded-full bg-black border border-blue-500/50 flex items-center justify-center text-blue-400 hover:bg-blue-600 hover:text-white transition">
                   <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"></path></svg>

@@ -116,18 +116,14 @@ function SendArrowIcon({ className = "w-4 h-4" }: { className?: string }) {
 export default function FloatingWhatsApp() {
   const pathname = usePathname() || "/";
   const isEn = pathname.startsWith("/en");
-
   const [isOpen, setIsOpen] = useState(false);
   const [selectedTopicId, setSelectedTopicId] = useState<string>("seo");
   const [showHint, setShowHint] = useState(false);
-
-  // إظهار تلميح أنيق بعد 4 ثوانٍ من تصفح الزائر
   useEffect(() => {
     const timer = setTimeout(() => setShowHint(true), 4000);
     return () => clearTimeout(timer);
   }, []);
 
-  // إغلاق القائمة عند الضغط على مفتاح Escape
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") setIsOpen(false);
@@ -156,14 +152,12 @@ export default function FloatingWhatsApp() {
         isEn ? "right-5 sm:right-6 items-end" : "left-5 sm:left-6 items-start"
       }`}
     >
-      {/* نافذة المحادثة الاحترافية */}
       {isOpen && (
         <div
           role="dialog"
           aria-label={isEn ? "WhatsApp Concierge" : "تواصل معنا عبر واتساب"}
           className="mb-3.5 w-[320px] sm:w-[355px] overflow-hidden rounded-3xl border border-emerald-500/30 bg-[#060A13]/95 shadow-[0_20px_70px_rgba(0,0,0,0.85),0_0_40px_rgba(16,185,129,0.14)] backdrop-blur-xl transition-all"
         >
-          {/* الهيدر */}
           <div className="relative bg-gradient-to-br from-[#071A17] via-[#07131D] to-[#060B16] px-5 py-4 border-b border-neutral-800/90">
             <div className="flex items-center justify-between gap-3">
               <div className="flex items-center gap-3">
@@ -197,7 +191,6 @@ export default function FloatingWhatsApp() {
             </div>
           </div>
 
-          {/* اختيار نوع الخدمة لتجهيز الرسالة تلقائياً */}
           <div className="px-4 pt-4 pb-2">
             <div className="text-[11px] font-bold text-neutral-400 mb-2">
               {isEn ? "What can we help you with?" : "كيف يمكننا مساعدتك اليوم؟"}
@@ -223,7 +216,6 @@ export default function FloatingWhatsApp() {
             </div>
           </div>
 
-          {/* كروت أرقام الواتساب */}
           <div className="p-4 space-y-2.5">
             {WHATSAPP_AGENTS.map((agent) => (
               <a
@@ -265,7 +257,6 @@ export default function FloatingWhatsApp() {
             ))}
           </div>
 
-          {/* فوتر مصغر */}
           <div className="border-t border-neutral-900 bg-black/50 px-4 py-2.5 text-center text-[10px] text-neutral-500">
             {isEn
               ? "Direct encrypted chat via official WhatsApp"
@@ -274,7 +265,6 @@ export default function FloatingWhatsApp() {
         </div>
       )}
 
-      {/* الزر العائم الرئيسي + التلميح الجانبي */}
       <div className="flex items-center gap-3">
         {!isOpen && showHint && (
           <button
@@ -296,7 +286,6 @@ export default function FloatingWhatsApp() {
           aria-label={isEn ? "Open WhatsApp Chat" : "فتح محادثة واتساب"}
           className="group relative flex h-14 w-14 sm:h-15 sm:w-15 items-center justify-center rounded-full bg-gradient-to-br from-emerald-500 via-emerald-600 to-teal-600 text-white shadow-[0_10px_35px_rgba(16,185,129,0.45)] hover:scale-105 active:scale-95 transition-transform focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2 focus:ring-offset-black"
         >
-          {/* حلقة نبض ناعمة احترافية */}
           {!isOpen && (
             <span className="pointer-events-none absolute inset-0 rounded-full bg-emerald-400/35 animate-ping" />
           )}
@@ -309,7 +298,6 @@ export default function FloatingWhatsApp() {
             )}
           </span>
 
-          {/* مؤشر التواجد الأخضر */}
           {!isOpen && (
             <span className="absolute top-0.5 right-0.5 z-20 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-black">
               <span className="h-2.5 w-2.5 rounded-full bg-emerald-400" />

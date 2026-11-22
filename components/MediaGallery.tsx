@@ -12,10 +12,9 @@ interface VideoItem {
   thumbnail: string;
 }
 
-// فيديوهات احتياطية في حال كانت القناة قيد التحديث أو أردت تثبيت فيديوهات معينة
 const FALLBACK_VIDEOS: VideoItem[] = [
   {
-    id: "dQw4w9WgXcQ", // استبدله بـ ID الفيديو من قناتك عند الحاجة
+    id: "dQw4w9WgXcQ", 
     title: "كيف تتصدر نتائج البحث في جوجل (SEO) وتحقق مبيعات مضاعفة؟",
     views: "1.2K",
     thumbnail: "https://i.ytimg.com/vi/dQw4w9WgXcQ/hqdefault.jpg",
@@ -31,8 +30,6 @@ export default function MediaGallery() {
   const [loading, setLoading] = useState(true);
   const [activeVideo, setActiveVideo] = useState<VideoItem | null>(null);
   const [isShortMode, setIsShortMode] = useState(true); // لعرض الـ Shorts بالطول أو بالعرض
-
-  // النصوص المترجمة (عربي / إنجليزي)
   const content = {
     ar: {
       badge: "مكتبة الميديا والفيديوهات",
@@ -85,7 +82,6 @@ export default function MediaGallery() {
     fetchVideos();
   }, []);
 
-  // إغلاق النافذة بزر Escape
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") setActiveVideo(null);
@@ -99,11 +95,9 @@ export default function MediaGallery() {
       className="relative min-h-screen w-full bg-[#000000] text-white py-20 px-4 sm:px-6 lg:px-8 overflow-hidden"
       dir={locale === "ar" ? "rtl" : "ltr"}
     >
-      {/* إضاءة خلفية زرقاء احترافية */}
       <div className="absolute top-16 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-blue-600/15 blur-[140px] rounded-full pointer-events-none" />
 
       <div className="relative z-10 max-w-7xl mx-auto">
-        {/* رأس الصفحة (Header) */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-950/50 border border-blue-500/40 text-blue-400 text-xs sm:text-sm font-bold mb-6 shadow-[0_0_20px_rgba(30,58,138,0.4)]">
             <span className="w-2 h-2 rounded-full bg-blue-400 animate-ping" />
@@ -135,7 +129,6 @@ export default function MediaGallery() {
           </a>
         </div>
 
-        {/* حالة التحميل */}
         {loading ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {[1, 2, 3, 4].map((n) => (
@@ -149,7 +142,6 @@ export default function MediaGallery() {
             ))}
           </div>
         ) : (
-          /* شبكة عرض الفيديوهات */
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {videos.map((video) => (
               <div
@@ -157,17 +149,14 @@ export default function MediaGallery() {
                 onClick={() => setActiveVideo(video)}
                 className="group cursor-pointer relative aspect-[9/14] rounded-3xl overflow-hidden bg-[#050811] border border-blue-500/30 hover:border-blue-400 transition-all duration-500 shadow-[0_10px_30px_rgba(0,0,0,0.8)] hover:shadow-[0_0_35px_rgba(37,99,235,0.4)] hover:-translate-y-1.5"
               >
-                {/* صورة الفيديو المصغرة */}
                 <img
                   src={video.thumbnail}
                   alt={video.title}
                   className="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-700 opacity-85 group-hover:opacity-100"
                 />
 
-                {/* تدرج لوني سفلي لقراءة النص بوضوح */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
 
-                {/* شارة Shorts العلوية */}
                 <div className="absolute top-4 left-4 right-4 flex items-center justify-between">
                   <span className="px-3 py-1 rounded-full bg-black/70 backdrop-blur-md border border-blue-500/40 text-blue-400 text-xs font-bold">
                     Shorts
@@ -179,7 +168,6 @@ export default function MediaGallery() {
                   )}
                 </div>
 
-                {/* أيقونة التشغيل في المنتصف */}
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="w-16 h-16 rounded-full bg-blue-600/90 group-hover:bg-blue-500 text-white flex items-center justify-center shadow-[0_0_30px_rgba(37,99,235,0.8)] group-hover:scale-110 transition-all duration-300 border border-white/20">
                     <svg className="w-7 h-7 fill-current ml-0.5" viewBox="0 0 24 24">
@@ -188,7 +176,6 @@ export default function MediaGallery() {
                   </div>
                 </div>
 
-                {/* عنوان الفيديو بالأسفل */}
                 <div className="absolute bottom-0 inset-x-0 p-5">
                   <h3 className="text-white font-bold text-sm sm:text-base line-clamp-2 group-hover:text-blue-300 transition-colors">
                     {video.title}
@@ -204,7 +191,6 @@ export default function MediaGallery() {
         )}
       </div>
 
-      {/* المستطيل المميز المنبثق لعرض الفيديو (Custom Video Modal) */}
       {activeVideo && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-xl p-4 animate-fadeIn"
@@ -216,7 +202,6 @@ export default function MediaGallery() {
               isShortMode ? "max-w-[420px]" : "max-w-4xl"
             } bg-[#050811] border-2 border-blue-500/60 rounded-3xl overflow-hidden shadow-[0_0_60px_rgba(37,99,235,0.45)] transition-all duration-300`}
           >
-            {/* شريط التحكم العلوي للنافذة المميزة */}
             <div className="flex items-center justify-between px-5 py-3.5 bg-[#020409] border-b border-blue-500/30">
               <div className="flex items-center gap-2 truncate">
                 <span className="w-2.5 h-2.5 rounded-full bg-blue-500 animate-pulse shrink-0" />
@@ -234,7 +219,6 @@ export default function MediaGallery() {
               </button>
             </div>
 
-            {/* مشغل يوتيوب المدمج */}
             <div className={`relative w-full ${isShortMode ? "aspect-[9/16]" : "aspect-video"} bg-black`}>
               <iframe
                 src={`https://www.youtube.com/embed/${activeVideo.id}?autoplay=1&rel=0&modestbranding=1`}
@@ -245,7 +229,6 @@ export default function MediaGallery() {
               />
             </div>
 
-            {/* الشريط السفلي داخل المستطيل */}
             <div className="flex flex-wrap items-center justify-between gap-2 px-5 py-3.5 bg-[#020409] border-t border-blue-500/30 text-xs">
               <button
                 onClick={() => setIsShortMode(!isShortMode)}
