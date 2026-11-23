@@ -100,8 +100,11 @@ export default function Footer() {
               {data.quickLinksTitle}
             </h4>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <Link href={isEnglish ? "/en" : "/"} className="px-6 py-4 rounded-2xl bg-[#050505] border border-white/5 hover:border-blue-500 hover:bg-blue-600/10 text-gray-300 hover:text-white text-center font-medium transition-all shadow-md">
+              <Link href={isEnglish ? "/en/about" : "/about"} className="px-6 py-4 rounded-2xl bg-[#050505] border border-white/5 hover:border-blue-500 hover:bg-blue-600/10 text-gray-300 hover:text-white text-center font-medium transition-all shadow-md">
                 {data.aboutUs}
+              </Link>
+              <Link href={isEnglish ? "/en/pricing" : "/pricing"} className="px-6 py-4 rounded-2xl bg-[#050505] border border-white/5 hover:border-blue-500 hover:bg-blue-600/10 text-gray-300 hover:text-white text-center font-medium transition-all shadow-md">
+                {isEnglish ? "Pricing & Packages" : "الباقات والأسعار"}
               </Link>
               <Link href={isEnglish ? "/en/blog" : "/blog"} className="px-6 py-4 rounded-2xl bg-[#050505] border border-white/5 hover:border-blue-500 hover:bg-blue-600/10 text-gray-300 hover:text-white text-center font-medium transition-all shadow-md">
                 {data.blog}
@@ -135,6 +138,15 @@ export default function Footer() {
               </Link>
               <Link href={isEnglish ? "/en/services/e-commerce" : "/services/e-commerce"} className="px-6 py-4 rounded-2xl bg-[#050505] border border-white/5 hover:border-blue-500 hover:bg-blue-600/10 text-gray-300 hover:text-white text-center font-medium transition-all shadow-md block">
                 {data.ecommerce}
+              </Link>
+              <Link href={isEnglish ? "/en/services/social-media" : "/services/social-media"} className="px-6 py-4 rounded-2xl bg-[#050505] border border-white/5 hover:border-blue-500 hover:bg-blue-600/10 text-gray-300 hover:text-white text-center font-medium transition-all shadow-md block">
+                {data.socialMedia || data["social media"] || (isEnglish ? "Social Media Marketing" : "إدارة وسائل التواصل الاجتماعي")}
+              </Link>
+              <Link href={isEnglish ? "/en/services/content-writing" : "/services/content-writing"} className="px-6 py-4 rounded-2xl bg-[#050505] border border-white/5 hover:border-blue-500 hover:bg-blue-600/10 text-gray-300 hover:text-white text-center font-medium transition-all shadow-md block">
+                {data.contentMarketing || (isEnglish ? "Content Marketing" : "كتابة المحتوى التسويقي")}
+              </Link>
+              <Link href={isEnglish ? "/en/services/android" : "/services/android"} className="px-6 py-4 rounded-2xl bg-[#050505] border border-white/5 hover:border-blue-500 hover:bg-blue-600/10 text-gray-300 hover:text-white text-center font-medium transition-all shadow-md block sm:col-span-2">
+                {data.mobileApps || (isEnglish ? "Mobile Apps Development (Android & iOS)" : "تصميم وتطوير تطبيقات الجوال")}
               </Link>
             </div>
           </div>

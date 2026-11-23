@@ -40,6 +40,7 @@ export default function Navbar() {
     { name: locale === "ar" ? "إنشاء المتاجر الإلكترونية" : "E-commerce Stores", slug: "e-commerce" },
     { name: locale === "ar" ? "تطوير تطبيقات الجوال (Android)" : "Mobile Apps Development", slug: "android" },
     { name: locale === "ar" ? "كتابة المحتوى التسويقي" : "Marketing Content Writing", slug: "content-writing" },
+    { name: locale === "ar" ? "إدارة وسائل التواصل الاجتماعي" : "Social Media Marketing", slug: "social-media" },
   ].map((s) => ({
     ...s,
     path: isEnglish ? `/en/services/${s.slug}` : `/services/${s.slug}`,
